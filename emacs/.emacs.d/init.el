@@ -78,11 +78,11 @@
 
 (leaf vertico
   :ensure t
-  :hook (after-init . vertico-mode))
+  :global-minor-mode t)
 
 (leaf marginalia
   :ensure t
-  :hook (after-init . marginalia-mode))
+  :global-minor-mode t)
 
 (leaf orderless
   :ensure t
@@ -91,24 +91,44 @@
   (setq completion-category-defaults nil)
   (setq completion-category-overrides nil))
 
-(leaf savehist
-  :config
-  (savehist-mode 1))
+(leaf consult
+  :ensure t
+  :hook
+  (completion-list-mode-hook . consult-preview-at-point-mode)
+  :custom
+  (consult-line-start-from-top . t)
+  :bind
+  (("C-c h" . consult-history)
+   ("C-c b" . consult-buffer)
+   ("C-s" . consult-line)
+   ("C-c g" . consult-grep)
+   ("C-c G" . consult-goto-line)
+   (minibuffer-local-map
+    :package emacs
+    ("C-r" . consult-history))))
+
+(leaf embark-consult
+  :ensure t
+  :bind ((minibuffer-mode-map
+	 :package emacs
+	 ("M-x" . embark-dwim)
+	 ("C-." . embark-act))))
 
 (leaf corfu
   :ensure t
-  :hook (after-init . global-corfu-mode)
+  :global-minor-mode global-corfu-mode corfu-popupinfo-mode
+  :custom
+  ((corfu-auto . t)
+   (corfu-auto-delay . 0)
+   (corfu-auto-prefix . 1)
+   (corfu-popupinfo-delay . nil))
   :bind ((corfu-map
-	  ("<tab>" . corfu-complete)))
+	  ("C-s" . corfu-insert-separator))))
+
+(leaf cape
+  :ensure t
   :config
-  (setq tab-always-indent 'complete)
-  (setq corfu-preview-current nil)
-  (setq corfu-min-width 20)
-  (setq corfu-popupinfo-delay '(1.25 . 0.5))
-  (corfu-popupinfo-mode 1)
-  (with-eval-after-load 'savehist
-    (corfu-history-mode 1)
-    (add-to-list 'savehist-additional-variables 'corfu-history)))
+  (add-to-list 'completion-at-point-functions #'cape-file))
 
 ;; File Manager (Dired)
 (setq dired-recursive-copies 'always)
