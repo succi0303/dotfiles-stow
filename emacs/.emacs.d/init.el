@@ -104,7 +104,7 @@
   (("C-c h" . consult-history)
    ("C-c b" . consult-buffer)
    ("C-s" . consult-line)
-   ("C-c g" . consult-grep)
+   ("C-c g" . consult-goto-line)
    ("C-c G" . consult-goto-line)
    (minibuffer-local-map
     :package emacs
