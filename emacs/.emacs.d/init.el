@@ -25,6 +25,9 @@
       :config
       (leaf-keywords-init))
 
+;; General
+(setq make-backup-files t)
+
 ;; Appearance
 
 (menu-bar-mode -1)
