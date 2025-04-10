@@ -40,11 +40,14 @@
 (tab-bar-mode t)
 (global-visual-line-mode t)
 
+(set-frame-parameter (selected-frame) 'alpha '(85 85))
+(add-to-list 'default-frame-alist '(alpha 85 85))
+
 (leaf doom-themes
   :ensure t
   :defun (doom-themes-visual-bell-config)
   :config
-  (load-theme'doom-vibrant t)
+  (load-theme 'doom-laserwave t)
   (doom-themes-visual-bell-config)
   (doom-themes-neotree-config)
   )
