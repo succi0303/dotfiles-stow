@@ -38,6 +38,7 @@
 (global-display-line-numbers-mode t)
 (custom-set-variables '(display-line-numbers-width-start t))
 (tab-bar-mode t)
+(global-visual-line-mode t)
 
 (leaf doom-themes
   :ensure t
@@ -46,7 +47,7 @@
   (load-theme'doom-vibrant t)
   (doom-themes-visual-bell-config)
   (doom-themes-neotree-config)
-  (doom-themes-org-config))
+  )
 
 (leaf doom-modeline
   :ensure t
