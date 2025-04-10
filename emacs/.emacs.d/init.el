@@ -30,6 +30,8 @@
 (setq auto-save-default nil)
 (normal-erase-is-backspace-mode 0)
 (global-set-key "\C-h" 'delete-backward-char)
+(transient-mark-mode t)
+(show-paren-mode 1)
 ;; Appearance
 
 (menu-bar-mode -1)
@@ -42,8 +44,7 @@
 (tab-bar-mode t)
 (global-visual-line-mode t)
 (when (equal system-type 'darwin)
-  (setq mac-command-modifier 'meta))
-  
+  (setq mac-command-modifier 'meta))  
 
 (set-frame-parameter (selected-frame) 'alpha '(85 85))
 (add-to-list 'default-frame-alist '(alpha 85 85))
