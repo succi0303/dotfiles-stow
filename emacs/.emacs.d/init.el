@@ -162,33 +162,42 @@
 
 ;; org-mode
 (leaf org
-  :bind
-  (("C-c c" . org-capture)
-   ("C-c a" . org-agenda)
-   ("C-c l" . org-store-link)
-   (:org-mode-map
-    ("C-c C-;" . org-edit-special))
-   (:org-src-mode-map
-    ("C-c C-;" . org-edit-src-special)))
-  :mode
-  ("\\.org$" . org-mode)
   :custom
   ((org-directory . "~/org/")
-   (org-default-note-file . "~/org/inbox.org")
-   (org-log-done . t)
-   (org-clock-persist . t)
-   (org-clock-out-when-done . t)
-   (org-adapt-indentation . nil)
-   (org-startup-indented . t)
-   (org-startup-folded . 'fold)
-   (org-hide-leading-stars . t)
-   (org-ellipsis . " ▼")))
+  (org-default-notes-file . "~/org/inbox.org")
+  (org-log-done . t)
+  (org-startup-indented . t)
+  (org-hide-leading-stars . t)
+  (org-ellipsis . " ▼")))
 
 (leaf org-bullets
   :ensure t
   :hook (org-mode . org-bullets-mode))
 
-;; Git
+(leaf org-capture
+  :bind (("C-c c" . org-capture))
+  :custom
+  ((org-capture-templates .
+			  '(("t" "Todo" entry (file+headline "~/org/inbox.org" "Tasks")
+			     "* TODO %?\n %U\n %a")
+			    ("n" "Note" entry (file+headline "~/org/notes.org" "Notes")
+			     "* %?\nEntered on %U\n %i\n %a")))))
+
+(leaf org-agenda
+  :bind (("C-c a" . org-agenda)))
+
+(leaf org-journal
+  :ensure t
+  :custom
+  ((org-journal-dir . "~/org/journal/")
+   (org-journal-date-format . "%A, %Y-%m-%d")
+   (org-journal-file-format . "%Y-%m-%d.org")
+   (org-journal-time-format . "")
+   (org-journal-enable-agenda-integration . t))
+  :bind (("C-c j" . org-journal-new-entry)))
+   
+
+;; git
 
 (leaf magit
   :ensure t
