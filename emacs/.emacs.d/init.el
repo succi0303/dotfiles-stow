@@ -26,7 +26,8 @@
       (leaf-keywords-init))
 
 ;; General
-(setq make-backup-files t)
+(setq make-backup-files nil)
+(setq auto-save-default nil)
 
 ;; Appearance
 
@@ -39,6 +40,9 @@
 (custom-set-variables '(display-line-numbers-width-start t))
 (tab-bar-mode t)
 (global-visual-line-mode t)
+(when (equal system-type 'darwin)
+  (setq mac-command-modifier 'meta))
+  
 
 (set-frame-parameter (selected-frame) 'alpha '(85 85))
 (add-to-list 'default-frame-alist '(alpha 85 85))
@@ -47,7 +51,7 @@
   :ensure t
   :defun (doom-themes-visual-bell-config)
   :config
-  (load-theme 'doom-laserwave t)
+  (load-theme 'doom-monokai-spectrum t)
   (doom-themes-visual-bell-config)
   (doom-themes-neotree-config)
   )
@@ -166,13 +170,20 @@
 
 ;; org-mode
 (leaf org
+  :bind
+  (("C-x n s" . org-narrow-to-subtree)
+   ("C-x n w" . widen))
   :custom
-  ((org-directory . "~/org/")
+  (org-directory . "~/org/")
   (org-default-notes-file . "~/org/inbox.org")
-  (org-log-done . t)
-  (org-startup-indented . t)
+  (org-startup-with-inline-images . t)
+  (org-image-visual-width . nil)
+  (org-clock-into-drawer . t)
+  (org-log-done . 'time)
   (org-hide-leading-stars . t)
-  (org-ellipsis . " ▼")))
+  (org-return-follows-link . t)
+  (org-todo-keywords . '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)")))
+  (org-ellipsis . " ▼"))
 
 (leaf org-bullets
   :ensure t
@@ -190,12 +201,15 @@
 (leaf org-agenda
   :bind (("C-c a" . org-agenda)))
 
+(leaf org-store-link
+  :bind (("C-c l" . org-store-link)))
+
 (leaf org-journal
   :ensure t
   :custom
   ((org-journal-dir . "~/org/journal/")
-   (org-journal-date-format . "%A, %Y-%m-%d")
-   (org-journal-file-format . "%Y-%m-%d.org")
+   (org-journal-date-format . "%Y-%m-%d, %A")
+   (org-journal-file-format . "%Y-%m.org")
    (org-journal-time-format . "")
    (org-journal-enable-agenda-integration . t))
   :bind (("C-c j" . org-journal-new-entry)))
