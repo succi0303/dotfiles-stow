@@ -28,7 +28,8 @@
 ;; General
 (setq make-backup-files nil)
 (setq auto-save-default nil)
-
+(normal-erase-is-backspace-mode 0)
+(global-set-key "\C-h" 'delete-backward-char)
 ;; Appearance
 
 (menu-bar-mode -1)
