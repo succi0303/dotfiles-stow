@@ -16,6 +16,7 @@ emacs/.emacs.d/elpa/
 emacs/.emacs.d/elpa-*
 emacs/.emacs.d/history
 emacs/.emacs.d/recentf
+emacs/.emacs.d/bookmarks
 emacs/.emacs.d/transient
 emacs/.emacs.d/projects
 emacs/.emacs.d/projectile-bookmarks.eld

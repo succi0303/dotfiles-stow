@@ -32,6 +32,9 @@
 (global-set-key "\C-h" 'delete-backward-char)
 (transient-mark-mode t)
 (show-paren-mode 1)
+(windmove-default-keybindings)
+(setq windmove-wrap-around t)
+
 ;; Appearance
 
 (menu-bar-mode -1)
@@ -83,6 +86,13 @@
   :ensure t
   :hook (dired-mode . nerd-icons-dired-mode))
 
+(leaf treemacs
+  :ensure t
+  :bind (("C-c t" . treemacs))
+  :custom
+  (treemacs-width . 30)
+  (treemacs-no-png-images . t))
+
 (leaf puni
   :ensure t
   :global-minor-mode puni-global-mode)
@@ -91,7 +101,12 @@
 
 (leaf vertico
   :ensure t
-  :global-minor-mode t)
+  :custom
+  (vertico-count . 20)
+  (vertico-resize . t)
+  (vertico-cycle . t)
+  :init
+  (vertico-mode))
 
 (leaf marginalia
   :ensure t
@@ -116,6 +131,7 @@
    ("C-s" . consult-line)
    ("C-c g" . consult-goto-line)
    ("C-c G" . consult-goto-line)
+   ("C-c h" . consult-org-heading)
    (minibuffer-local-map
     :package emacs
     ("C-r" . consult-history))))
@@ -191,6 +207,10 @@
   :ensure t
   :hook (org-mode . org-bullets-mode))
 
+(leaf org-superstar
+  :ensure t
+  :hook (org-mode . org-superstar-mode))
+
 (leaf org-capture
   :bind (("C-c c" . org-capture))
   :custom
@@ -201,7 +221,12 @@
 			     "* %?\nEntered on %U\n %i\n %a")))))
 
 (leaf org-agenda
-  :bind (("C-c a" . org-agenda)))
+  :bind (("C-c a" . org-agenda))
+  :custom
+  (setq org-agenda-files (list org-directory))
+  (setq org-refile-targets
+	(quote (org-agenda-files :maxlevel . 3)))
+  (setq org-refile-use-outline-path 'file))
 
 (leaf org-store-link
   :bind (("C-c l" . org-store-link)))
