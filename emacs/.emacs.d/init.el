@@ -52,21 +52,9 @@
 (set-frame-parameter (selected-frame) 'alpha '(85 85))
 (add-to-list 'default-frame-alist '(alpha 85 85))
 
-(leaf doom-themes
+(leaf kaolin-themes
   :ensure t
-  :defun (doom-themes-visual-bell-config)
-  :config
-  (load-theme 'doom-monokai-spectrum t)
-  (doom-themes-visual-bell-config)
-  (doom-themes-neotree-config)
-  )
-
-(leaf doom-modeline
-  :ensure t
-  :global-minor-mode t
-  :custom
-  (doom-modeline-bar-width . 4)
-  (doom-modeline-hud . t))
+  :config (load-theme 'kaolin-dark t))
 
 (leaf beacon
   :ensure t
@@ -93,20 +81,16 @@
   (treemacs-width . 30)
   (treemacs-no-png-images . t))
 
-(leaf puni
-  :ensure t
-  :global-minor-mode puni-global-mode)
-
 ;; minibuffer & completions
 
 (leaf vertico
   :ensure t
+  :hook ((minibuffer-setup . vertico-repeat-save))
   :custom
   (vertico-count . 20)
-  (vertico-resize . t)
   (vertico-cycle . t)
-  :init
-  (vertico-mode))
+  (vertico-resize . t)
+  :global-minor-mode t)
 
 (leaf marginalia
   :ensure t
@@ -122,8 +106,14 @@
 (leaf consult
   :ensure t
   :hook
-  (completion-list-mode-hook . consult-preview-at-point-mode)
+  (completion-list-mode . consult-preview-at-point-mode)
+  :init
+  (advice-add #'register-preview :override #'consult-register-window)
+  (setq register-preview-delay 0.5)
+  (setq xref-show-xrefs-function #'consult-xref
+	xref-show-definitions-function #'consult-xref)
   :custom
+  (register-preview-function . #'consult-register-format)
   (consult-line-start-from-top . t)
   :bind
   (("C-c h" . consult-history)
@@ -145,44 +135,17 @@
 
 (leaf corfu
   :ensure t
-  :global-minor-mode global-corfu-mode corfu-popupinfo-mode
   :custom
-  ((corfu-auto . t)
-   (corfu-auto-delay . 0)
-   (corfu-auto-prefix . 1)
-   (corfu-popupinfo-delay . nil))
-  :bind ((corfu-map
-	  ("C-s" . corfu-insert-separator))))
-
-(leaf cape
-  :ensure t
-  :config
-  (add-to-list 'completion-at-point-functions #'cape-file))
-
-;; File Manager (Dired)
-(setq dired-recursive-copies 'always)
-(setq dired-recursive-deletes 'always)
-(setq delete-by-moving-to-trash t)
-(setq dired-dwim-target t)
-
-(leaf dired-subtree
-  :ensure t
-  :after dired
-  :bind ((dired-mode-map
-	  ("<tab>" . dired-subtree-toggle)
-	  ("TAB" . dired-subtree-toggle)
-	  ("<backtab>" . dired-subtree-remove)
-	  ("S-TAB" . dired-subtree-remove)))
-  :config (setq dired-subtree-use-backgrounds nil))
-
-(leaf trashed
-  :ensure t
-  :commands (trashed)
-  :config
-  (setq trashed-action-confirmer 'y-or-n-p)
-  (setq trashed-use-header-line t)
-  (setq trashed-sort-key '("Date deleted" . t))
-  (setq trashed-date-format "%Y-%m-%d %h:%M:%S"))
+  (corfu-auto . t)
+  (corfu-auto-delay . 0)
+  (corfu-popupinfo-delay . 0.2)
+  (corfu-cycle . t)
+  :bind ((:corfu-map
+	  ("TAB" . corfu-next)
+	  ("S-TAB" . corfu-previous)
+	  ("C-s" . corfu-insert-separator)))
+  :init
+  (global-corfu-mode))
 
 ;; Pakage Configuration
 
@@ -240,9 +203,6 @@
    (org-journal-time-format . "")
    (org-journal-enable-agenda-integration . t))
   :bind (("C-c j" . org-journal-new-entry)))
-   
-
-;; git
 
 (leaf magit
   :ensure t
@@ -251,38 +211,6 @@
 (leaf git-gutter
   :ensure t
   :global-minor-mode global-git-gutter-mode)
-
-;; Language Protocol Server
-(leaf eglot
-  :hook
-  (html-mode . eglot-ensure)
-  (go-mode . eglot-ensure)
-  (typescript-mode . eglot-ensure))
-
-;; docker
-(leaf docker
-  :ensure t)
-
-(leaf dockerfile-mode
-  :ensure t
-  :mode "Dockerfile\\'")
-
-;; vterm
-(leaf vterm
-  :ensure t
-  :commands vterm
-  :config
-  (setq vterm-shell "/usr/bin/bash"))
-
-;; UI & Other packages
-(leaf ivy
-  :ensure t
-  :config (ivy-mode 1))
-
-(leaf counsel
-  :ensure t
-  :after ivy
-  :config (counsel-mode 1))
 
 (leaf which-key
   :ensure t
