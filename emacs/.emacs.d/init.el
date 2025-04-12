@@ -211,12 +211,12 @@
   :init
   (global-set-key (kbd "C-c j") #'org-journal-new-entry)
   (setq org-jounal-dir "~/org/journal/"
-	org-journal-date-format "%Y-%m-%d, %A"
-	org-journal-file-format "%Y-%m-%d.org"
+	org-journal-date-format "%Y-%m-%d"
+	org-journal-file-format "%Y-%m.org"
 	org-journal-time-format ""
 	org-journal-enable-agenda-integration t
-	org-journal-file-type 'daily)
-  (setq org-journal-header "#+TITLE: %Y-%m-Yd Journal\n\n"))
+	org-journal-file-type 'monthly)
+  (setq org-journal-header "#+TITLE: %Y-%m Journal\n\n"))
 
 (use-package magit
   :bind ("C-x g" . magit-status))
