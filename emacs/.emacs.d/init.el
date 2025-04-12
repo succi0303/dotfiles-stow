@@ -160,7 +160,7 @@
    ("C-x n s" . org-narrow-subtree)
    ("C-x n w" . widen)
    :map org-mode-map
-   ("C-m" . #'org-inserZt-heading-respect-content))
+   ("C-c m" . #'org-insert-heading-respect-content))
   :config
   (setq org-directory "~/org/"
 	org-default-notes-file "~/org/inbox.org"
