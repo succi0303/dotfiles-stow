@@ -13,17 +13,15 @@
 (require 'package)
 (setq package-archives
       '(("melpa" . "https://melpa.org/packages/")
-	("gnu" . "https://elpa.gnu.org/packages/")))
+        ("gnu" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 
-(unless (package-installed-p 'leaf)
+(unless (package-installed-p 'use-package)
   (package-refresh-contents)
-  (package-install 'leaf))
+  (package-install 'use-package))
 
-(leaf leaf-keywords
-      :ensure t
-      :config
-      (leaf-keywords-init))
+(require 'use-package)
+(setq use-package-always-ensure t)
 
 ;; General
 (setq make-backup-files nil)
@@ -47,74 +45,79 @@
 (tab-bar-mode t)
 (global-visual-line-mode t)
 (when (equal system-type 'darwin)
-  (setq mac-command-modifier 'meta))  
+  (setq mac-command-modifier 'meta))
 
 (set-frame-parameter (selected-frame) 'alpha '(85 85))
 (add-to-list 'default-frame-alist '(alpha 85 85))
 
-(leaf kaolin-themes
-  :ensure t
+(use-package kaolin-themes
   :config (load-theme 'kaolin-dark t))
 
-(leaf beacon
-  :ensure t
-  :global-minor-mode t)
+(use-package beacon
+  :config (beacon-mode 1))
 
-(leaf volatile-highlights
-  :ensure t
-  :global-minor-mode t)
+(use-package volatile-highlights
+  :config (volatile-highlights-mode 1))
 
-(leaf nerd-icons
-  :ensure t)
+(use-package nerd-icons)
 
-(leaf nerd-icons-completion
-  :ensure t)
+(use-package nerd-icons-completion)
 
-(leaf nerd-icons-dired
-  :ensure t
+(use-package nerd-icons-dired
   :hook (dired-mode . nerd-icons-dired-mode))
 
-(leaf treemacs
+(use-package treemacs
   :ensure t
-  :bind (("C-c t" . treemacs))
+  :defer t
+  :bind
+  (:map global-map
+	("C-c t" . treemacs))
   :custom
-  (treemacs-width . 30)
-  (treemacs-no-png-images . t))
+  (treemacs-width 30)
+  (treemacs-no-png-images t))
 
 ;; minibuffer & completions
 
-(leaf vertico
-  :ensure t
-  :hook ((minibuffer-setup . vertico-repeat-save))
+(use-package vertico
   :custom
-  (vertico-count . 20)
-  (vertico-cycle . t)
-  (vertico-resize . t)
-  :global-minor-mode t)
+  (vertico-count 20)
+  (vertico-cycle t)
+  (vertico-resize t)
+  :init
+  (vertico-mode 1))
 
-(leaf marginalia
+(use-package marginalia
   :ensure t
-  :global-minor-mode t)
+  :config
+  (marginalia-mode))
 
-(leaf orderless
+(use-package embark
   :ensure t
+  :bind
+  (("C-." . embark-act)
+   ("C-;" . embark-dwim))
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :config
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+
+(use-package embark-consult
+  :ensure t
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
+
+
+(use-package orderless
   :config
   (setq completion-styles '(orderless basic))
   (setq completion-category-defaults nil)
   (setq completion-category-overrides nil))
 
-(leaf consult
-  :ensure t
-  :hook
-  (completion-list-mode . consult-preview-at-point-mode)
-  :init
-  (advice-add #'register-preview :override #'consult-register-window)
-  (setq register-preview-delay 0.5)
-  (setq xref-show-xrefs-function #'consult-xref
-	xref-show-definitions-function #'consult-xref)
-  :custom
-  (register-preview-function . #'consult-register-format)
-  (consult-line-start-from-top . t)
+(use-package consult
   :bind
   (("C-c h" . consult-history)
    ("C-c b" . consult-buffer)
@@ -122,108 +125,112 @@
    ("C-c g" . consult-goto-line)
    ("C-c G" . consult-goto-line)
    ("C-c h" . consult-org-heading)
-   (minibuffer-local-map
-    :package emacs
-    ("C-r" . consult-history))))
+   :map minibuffer-local-map
+    ("C-r" . consult-history))
+  :config
+  (setq consult-line-start-from-top t)
+  (setq register-preview-delay 0.5))
 
-(leaf embark-consult
+(use-package company
   :ensure t
-  :bind ((minibuffer-mode-map
-	 :package emacs
-	 ("M-x" . embark-dwim)
-	 ("C-." . embark-act))))
-
-(leaf corfu
-  :ensure t
+  :hook (after-init . global-company-mode)
   :custom
-  (corfu-auto . t)
-  (corfu-auto-delay . 0)
-  (corfu-popupinfo-delay . 0.2)
-  (corfu-cycle . t)
-  :bind ((:corfu-map
-	  ("TAB" . corfu-next)
-	  ("S-TAB" . corfu-previous)
-	  ("C-s" . corfu-insert-separator)))
-  :init
-  (global-corfu-mode))
+  (company-idle-delay 0.1)
+  (company-minimum-prefix-length 2) 
+  (company-dabbrev-other-buffers t) 
+  (company-dabbrev-code-other-buffers t)
+  :config
+  (defun my/company-dabbrev-setup ()
+    (setq-local company-backends '(company-dabbrev)))
+  (setq company-backends
+        '((company-dabbrev-code company-keywords)
+          company-files
+          company-dabbrev)))
 
-;; Pakage Configuration
+;; Package Configuration
 
 ;; org-mode
-(leaf org
+(use-package org
+  :mode ("\\.org\\'" . org-mode)
+  :hook ((org-mode . visual-line-mode)
+         (org-mode . org-indent-mode))
   :bind
-  (("C-x n s" . org-narrow-to-subtree)
+  (("C-c a" . org-agenda)
+   ("C-c c" . org-capture)
+   ("C-x n s" . org-narrow-subtree)
    ("C-x n w" . widen))
-  :custom
-  (org-directory . "~/org/")
-  (org-default-notes-file . "~/org/inbox.org")
-  (org-startup-with-inline-images . t)
-  (org-image-visual-width . nil)
-  (org-clock-into-drawer . t)
-  (org-log-done . 'time)
-  (org-hide-leading-stars . t)
-  (org-return-follows-link . t)
-  (org-todo-keywords . '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)")))
-  (org-ellipsis . " ▼"))
+  :config
+  (setq org-directory "~/org/"
+	org-default-notes-file "~/org/inbox.org"
+	org-startup-with-inline-images t
+	org-image-visual-width nil
+	org-clock-into-drawer t
+	org-startup-folded 'content
+	org-hide-leading-starts t
+	org-ellipsis " ▼ "
+	org-return-follows-link t)
+  (setq org-hide-emphasis-markers t)
+  ;; refile
+  (setq org-refile-targets
+	'((org-agenda-files :maxlevel . 3)))
+  (setq org-outline-path-complete-in-steps t)
+  (setq org-refile-use-outline-path 'file)
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
+  ;; TODO status
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "WAITING(w@/!)" "IN-PROGRESS(i)" "|" "DONE(d!)" "CANCELLED(c@)")))
+  (setq org-todo-keyword-faces
+        '(("TODO" . (:foreground "orange" :weight bold))
+          ("WAITING" . (:foreground "gold" :weight bold))
+          ("IN-PROGRESS" . (:foreground "deepskyblue" :weight bold))
+          ("DONE" . (:foreground "forest green" :weight bold))
+          ("CANCELLED" . (:foreground "gray" :weight bold))))
+  ;; org-capture
+  (setq org-capture-templates
+        '(("t" "Todo" entry
+           (file+headline "inbox.org" "Tasks")
+           "* TODO %?\n  %U\n  %a")
+          ("n" "Note" entry
+           (file+headline "inbox.org" "Notes")
+           "* %?\n  %U\n  %a")))
+  ;; org-agenda
+  (setq org-agenda-files (list org-directory)
+	org-log-done 'time))
 
-(leaf org-bullets
-  :ensure t
+(use-package org-bullets
+  :after org
   :hook (org-mode . org-bullets-mode))
 
-(leaf org-superstar
+(use-package org-modern
+  :hook (org-mode . org-modern-mode))
+
+(use-package org-journal
   :ensure t
-  :hook (org-mode . org-superstar-mode))
+  :init
+  (global-set-key (kbd "C-c j") #'org-journal-new-entry)
+  (setq org-jounal-dir "~/org/journal/"
+	org-journal-date-format "%Y-%m-%d, %A"
+	org-journal-file-format "%Y-%m-%d.org"
+	org-journal-time-format ""
+	org-journal-enable-agenda-integration t
+	org-journal-file-type 'daily)
+  (setq org-journal-header "#+TITLE: %Y-%m-Yd Journal\n\n"))
 
-(leaf org-capture
-  :bind (("C-c c" . org-capture))
-  :custom
-  ((org-capture-templates .
-			  '(("t" "Todo" entry (file+headline "~/org/inbox.org" "Tasks")
-			     "* TODO %?\n %U\n %a")
-			    ("n" "Note" entry (file+headline "~/org/notes.org" "Notes")
-			     "* %?\nEntered on %U\n %i\n %a")))))
-
-(leaf org-agenda
-  :bind (("C-c a" . org-agenda))
-  :custom
-  (setq org-agenda-files (list org-directory))
-  (setq org-refile-targets
-	(quote (org-agenda-files :maxlevel . 3)))
-  (setq org-refile-use-outline-path 'file))
-
-(leaf org-store-link
-  :bind (("C-c l" . org-store-link)))
-
-(leaf org-journal
-  :ensure t
-  :custom
-  ((org-journal-dir . "~/org/journal/")
-   (org-journal-date-format . "%Y-%m-%d, %A")
-   (org-journal-file-format . "%Y-%m.org")
-   (org-journal-time-format . "")
-   (org-journal-enable-agenda-integration . t))
-  :bind (("C-c j" . org-journal-new-entry)))
-
-(leaf magit
-  :ensure t
+(use-package magit
   :bind ("C-x g" . magit-status))
 
-(leaf git-gutter
-  :ensure t
-  :global-minor-mode global-git-gutter-mode)
+(use-package git-gutter
+  :config (global-git-gutter-mode 1))
 
-(leaf which-key
-  :ensure t
+(use-package which-key
   :config (which-key-mode))
 
-(leaf recentf
+(use-package recentf
   :config
   (recentf-mode 1)
   (setq recentf-max-menu-items 25))
 
-
-(leaf projectile
-  :ensure t
+(use-package projectile
   :config (projectile-mode +1))
 
 ;; init.el ends here
