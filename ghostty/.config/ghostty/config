@@ -1,2 +1,7 @@
+theme = ayu
+
+font-size = 16
+font-feature = -dlig
+
 quick-terminal-position = top
-keybind = ctrl+;=toggle_quick_terminal
+keybind = global:ctrl+;=toggle_quick_terminal
