@@ -51,7 +51,7 @@
 (add-to-list 'default-frame-alist '(alpha 85 85))
 
 (use-package kaolin-themes
-  :config (load-theme 'kaolin-dark t))
+  :config (load-theme 'kaolin-eclipse t))
 
 (use-package beacon
   :config (beacon-mode 1))
