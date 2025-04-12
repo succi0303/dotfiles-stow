@@ -201,9 +201,6 @@
   :after org
   :hook (org-mode . org-bullets-mode))
 
-(use-package org-modern
-  :hook (org-mode . org-modern-mode))
-
 (use-package org-journal
   :ensure t
   :init
