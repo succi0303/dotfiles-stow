@@ -189,11 +189,14 @@
           ("CANCELLED" . (:foreground "gray" :weight bold))))
   ;; org-capture
   (setq org-capture-templates
-        '(("t" "Todo" entry
-           (file+headline "inbox.org" "Tasks")
+        '(("i" "Inbox" entry
+	   (file+headline "inbox.org" "INBOX")
+	   "* %?")
+	  ("t" "Todo" entry
+           (file+headline "tasks.org" "TASKS")
            "* TODO %?\n  %U\n  %a")
           ("n" "Note" entry
-           (file+headline "inbox.org" "Notes")
+           (file+headline "notes.org" "NOTES")
            "* %?\n  %U\n  %a")))
   ;; org-agenda
   (setq org-agenda-files (list org-directory)
