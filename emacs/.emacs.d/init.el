@@ -158,7 +158,9 @@
   (("C-c a" . org-agenda)
    ("C-c c" . org-capture)
    ("C-x n s" . org-narrow-subtree)
-   ("C-x n w" . widen))
+   ("C-x n w" . widen)
+   :map org-mode-map
+   ("C-m" . #'org-inserZt-heading-respect-content))
   :config
   (setq org-directory "~/org/"
 	org-default-notes-file "~/org/inbox.org"
