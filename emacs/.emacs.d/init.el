@@ -160,7 +160,8 @@
    ("C-x n s" . org-narrow-subtree)
    ("C-x n w" . widen)
    :map org-mode-map
-   ("C-c m" . #'org-insert-heading-respect-content))
+   ("<RET>" . #'org-insert-heading-respect-content)
+   ("C-<RET>" . #'newline))
   :config
   (setq org-directory "~/org/"
 	org-default-notes-file "~/org/inbox.org"
@@ -216,7 +217,7 @@
 	org-journal-time-format ""
 	org-journal-enable-agenda-integration t
 	org-journal-file-type 'monthly)
-  (setq org-journal-header "#+TITLE: %Y-%m Journal\n\n"))
+  (setq org-journal-header "#+TITLE: %Y-%m Journal\n#+STARTUP: fold\n"))
 
 (use-package magit
   :bind ("C-x g" . magit-status))
@@ -234,5 +235,13 @@
 
 (use-package projectile
   :config (projectile-mode +1))
+
+;; markdown
+
+(use-package markdown-mode
+  :ensure t
+  :mode ("\\.md\\'" . markdown-mode)
+  :init
+  (setq markdown-command "pandoc"))
 
 ;; init.el ends here
