@@ -29,7 +29,6 @@
 (normal-erase-is-backspace-mode 0)
 (global-set-key "\C-h" 'delete-backward-char)
 (transient-mark-mode t)
-(show-paren-mode 1)
 (windmove-default-keybindings)
 (setq windmove-wrap-around t)
 
@@ -39,6 +38,7 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (line-number-mode +1)
+(global-hl-line-mode 1)
 (column-number-mode +1)
 (global-display-line-numbers-mode t)
 (custom-set-variables '(display-line-numbers-width-start t))
@@ -47,25 +47,78 @@
 (when (equal system-type 'darwin)
   (setq mac-command-modifier 'meta))
 
-(set-frame-parameter (selected-frame) 'alpha '(85 85))
-(add-to-list 'default-frame-alist '(alpha 85 85))
-
+;; theme
 (use-package kaolin-themes
   :config (load-theme 'kaolin-eclipse t))
 
+(set-frame-parameter (selected-frame) 'alpha '(85 85))
+(add-to-list 'default-frame-alist '(alpha 85 85))
+
+(use-package smart-mode-line
+  :ensure t
+  :config
+  (setq sml/no-confirm-load-theme t)
+  (setq sml/theme 'respectful)
+  (sml/setup))
+
+(use-package minions
+  :ensure t
+  :config
+  (minions-mode 1))
+
+;; paren
+(show-paren-mode 1)
+(setq show-paren-delay 0)
+(setq show-paren-style 'mixed) ;; 'parenthesis, 'expression, 'mixed
+(electric-pair-mode 1)
+
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+;; indent
+(use-package highlight-indent-guides
+  :ensure t
+  :hook (prog-mode . highlight-indent-guides-mode)
+  :config
+  (setq highlight-indent-guides-method 'character) ;; 'fill', 'column', 'character'
+  (setq highlight-indent-guides-character ?\|))
+
+;; visibility
 (use-package beacon
   :config (beacon-mode 1))
 
+(use-package highlight-symbol
+  :ensure t
+  :hook (prog-mode . highlight-symbol-mode)
+  :config
+  (setq highlight-symbol-idle-delay 0.2))
+
 (use-package volatile-highlights
+  :ensure t
   :config (volatile-highlights-mode 1))
 
-(use-package nerd-icons)
+(use-package pulse
+  :config
+  (defun my/pulse-line (&rest _)
+    (pulse-momentary-highlight-one-line (point)))
+  (dolist (cmd '(recenter-top-bottom
+                 other-window
+                 avy-goto-word-1
+                 consult-line
+                 consult-buffer))
+    (advice-add cmd :after #'my/pulse-line)))
 
-(use-package nerd-icons-completion)
+(defun my/pulse-matching-paren ()
+  (when (char-equal (char-after) ?\))
+    (save-excursion
+      (ignore-errors
+        (backward-sexp)
+        (pulse-momentary-highlight-one-line (point))))))
 
-(use-package nerd-icons-dired
-  :hook (dired-mode . nerd-icons-dired-mode))
+(advice-add 'show-paren-function :after #'my/pulse-matching-paren)
 
+;; sidebar
 (use-package treemacs
   :ensure t
   :defer t
