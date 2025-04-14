@@ -12,6 +12,7 @@ emacs/.emacs.d/.session
 emacs/.emacs.d/.session.*
 emacs/.emacs.d/custom.el
 emacs/.emacs.d/.org-id-locations
+emacs/.emacs.d/eln-cache/
 emacs/.emacs.d/elpa/
 emacs/.emacs.d/elpa-*
 emacs/.emacs.d/history

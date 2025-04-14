@@ -11,11 +11,15 @@
 (set-language-environment "UTF-8")
 (setq inhibit-startup-screen t)
 
-;; Package manager configuration
+;; Pacakge manager
 (require 'package)
+
 (setq package-archives
       '(("melpa" . "https://melpa.org/packages/")
-	("gnu" . "https://elpa.gnu.org/packages/")))
+        ;; ("melpa-stable" . "https://stable.melpa.org/packages/")
+        ("org" . "https://orgmode.org/elpa/")
+        ("gnu" . "https://elpa.gnu.org/packages/")))
+
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
