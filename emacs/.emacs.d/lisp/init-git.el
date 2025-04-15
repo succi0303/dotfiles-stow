@@ -26,5 +26,7 @@
           (shell-command "git push"))
       (message "Not inside a Git repository!"))))
 
+(global-set-key (kbd "C-c p") 'my/git-quick-commit-and-push)
+
 (provide 'init-git)
 ;;; init-git.el ends here
