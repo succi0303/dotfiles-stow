@@ -23,3 +23,5 @@ emacs/.emacs.d/projects
 emacs/.emacs.d/projectile-bookmarks.eld
 emacs/.emacs.d/.cache/
 emacs/.emacs.d/backups/
+emacs/.emacs.d/org-persist/
+emacs/.emacs.d/request/
