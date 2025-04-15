@@ -1,11 +1,9 @@
-;;; init-ui.el --- UI configuration -*- lexical-binding: t -*-
-;;; Commentary:
+
 ;;; Code:
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (tab-bar-mode t)
-(scroll-bar-mode -1)
 (line-number-mode t)
 (column-number-mode t)
 (global-display-line-numbers-mode t)
