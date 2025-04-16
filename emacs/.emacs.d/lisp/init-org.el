@@ -81,5 +81,13 @@
   :ensure t
   :after org)
 
+(use-package company-org-block
+  :ensure t
+  :custom
+  (company-org-block-edit-style 'auto)
+  :hook ((org-mode . (lambda()
+		      (setq-local company-backends '(company-org-block))
+				  (company-mode +1)))))
+
 (provide 'init-org)
 ;;; init-org.el ends here
