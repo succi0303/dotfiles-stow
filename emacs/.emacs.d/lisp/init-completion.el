@@ -23,6 +23,9 @@
   (setq completion-category-defaults nil)
   (setq completion-category-overrides nil))
 
+(use-package affe
+  :ensure t)
+
 (use-package consult
   :bind
   (("C-c h" . consult-history)
