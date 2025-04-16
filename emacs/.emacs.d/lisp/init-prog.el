@@ -6,5 +6,8 @@
 (use-package flymake
   :defer t)
 
+(use-package terraform-mode
+  :custom (terraform-indent-level 4))
+
 (provide 'init-prog)
 ;;; init-prog.el ends here
