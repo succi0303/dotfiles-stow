@@ -15,11 +15,26 @@
 (set-frame-parameter nil 'alpha-background 70)
 (add-to-list 'default-frame-alist '(alpha-background . 70))
 
-;; theme
-(use-package kaolin-themes
-  :ensure t
-  :config
-  (load-theme 'kaolin-eclipse t))
+;; theme with transparent background
+(load-theme 'modus-vivendi) 
+(add-to-list 'default-frame-alist '(background-color . "unspecified-bg"))
+
+;; toggle background transparency
+(defvar my/transparent-background-enabled t
+  "Whether the transparent background is enabled.")
+
+(defun my/toggle-transparent-background ()
+  "Toggle Emacs background transparency (terminal-compatible)."
+  (interactive)
+  (if my/transparent-background-enabled
+      (progn
+        (set-face-background 'default "#1e1e1e" (selected-frame)) ;; ← 好みの背景色に変更可
+        (message "transparent off!"))
+    (progn
+      (set-face-background 'default "unspecified-bg" (selected-frame))
+      (message "transparent on!")))
+  (setq my/transparent-background-enabled (not my/transparent-background-enabled)))
+(global-set-key (kbd "C-c u") #'my/toggle-transparent-background)
 
 (use-package smart-mode-line
   :ensure t
