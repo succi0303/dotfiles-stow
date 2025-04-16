@@ -7,10 +7,21 @@
   :defer t
   :config
   (add-to-list 'eglot-server-programs
+	       '(python-mode . ("pyright-langserver" "--stdio"))
 	       '(sh-mode . ("bash-language-server" "start"))
 	       '(terraform-mode . ("terraform-ls" "serve"))))
 (use-package flymake
   :defer t)
+
+;; python
+(use-package python
+  :mode ("\\.py\\'" . python-mode)
+  :hook ((python-mode . eglot-ensure)
+	 (python-mode . (lambda ()
+			  (setq indent-tabs-mode nil
+				python-indent-offset 4))))
+  :custom
+  (python-shell-interpreter "python3"))
 
 ;; shell script
 (use-package sh-script
