@@ -11,8 +11,11 @@
 (global-hl-line-mode t)
 (global-visual-line-mode t)
 
-(set-frame-parameter (selected-frame) 'alpha '(85 85))
-(add-to-list 'default-frame-alist '(alpha 85 85))
+;; Transparency
+(set-frame-parameter nil 'alpha-background 70)
+(add-to-list 'default-frame-alist '(alpha-background . 70))
+
+
 
 ;; theme
 (use-package kaolin-themes
