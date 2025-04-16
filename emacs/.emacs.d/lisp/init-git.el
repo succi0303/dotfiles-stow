@@ -4,9 +4,6 @@
 
 ;;; Code:
 
-(use-package git-commit-mode
-  :mode "\\COMMIT_EDITMSG\\'")
-
 (use-package git-modes
   :ensure t)
 
