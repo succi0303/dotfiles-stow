@@ -4,6 +4,12 @@
 
 ;;; Code:
 
+(use-package git-commit-mode
+  :mode "\\COMMIT_EDITMSG\\'")
+
+(use-package git-modes
+  :ensure t)
+
 (use-package magit
   :ensure t
   :bind ("C-x g" . magit-status))
