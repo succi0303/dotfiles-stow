@@ -25,5 +25,11 @@
   :config
   (projectile-mode 1))
 
+(use-package undo-fu
+  :ensure t
+  :bind*
+  ("C-/" . undo-fu-only-undo)
+  ("M-/" . undo-fu-only-redo))
+
 (provide 'init-core)
 ;;; init-core.el ends here
