@@ -3,10 +3,9 @@ theme = ayu
 font-family = "UDEV Gothic NF"
 font-size = 18
 adjust-cell-width = 10%
-nadjust-cell-height = 10%
+adjust-cell-height = 10%
 
 background-opacity = 0.6
 
 quick-terminal-position = top
-quick-terminal-size-multiplier = 0.75
 keybind = global:ctrl+;=toggle_quick_terminal
