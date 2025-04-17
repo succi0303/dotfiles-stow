@@ -70,6 +70,23 @@
   (setq indent-guide-char "|")
   (setq indent-guide-delay 0.1))
 
+;; anzu
+(use-package anzu
+  :ensure t
+  :demand t
+  :init
+  (global-anzu-mode +1)
+  :custom
+  (anzu-use-migemo nil)
+  (anzu-deactivate-region t)
+  (anzu-search-threshold 1000)
+  (anzu-replace-to-string-separator " => ")
+  (anzu-mode-lighter "")
+  :config
+  (global-set-key [remap query-replace] 'anzu-query-replace)
+  (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp))
+
+
 ;; visibility
 (use-package beacon
   :config (beacon-mode 1))
