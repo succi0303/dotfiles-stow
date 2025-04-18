@@ -31,5 +31,10 @@
   ("C-/" . undo-fu-only-undo)
   ("M-/" . undo-fu-only-redo))
 
+(use-package clipetty
+  :ensure t
+  :hook (after-init . global-clipetty-mode))
+
+
 (provide 'init-core)
 ;;; init-core.el ends here

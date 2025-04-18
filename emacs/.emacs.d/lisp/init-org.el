@@ -42,10 +42,16 @@
           ("DONE" . (:foreground "forest green" :weight bold))
           ("CANCELLED" . (:foreground "gray" :weight bold))))
   ;; Capture templates
+  (defun my/org-capure-inbox-to-top ()
+    (goto-char (point-min))
+    (while (looking-at-p "^#\\+")
+      (forward-line))
+    (unless (looking-at-p "^\\* ")
+      (insert "\n")))
   (setq org-capture-templates
         '(("i" "Inbox" entry
-           (file+headline "inbox.org" "INBOX")
-           "* %?")
+           (file "inbox.org")
+           "* %?\n  %U\n  %a" :prepend t)
           ("t" "Todo" entry
            (file+headline "tasks.org" "TASKS")
            "* TODO %?\n  %U\n  %a")
