@@ -9,3 +9,5 @@ background-opacity = 0.6
 
 quick-terminal-position = top
 keybind = global:ctrl+;=toggle_quick_terminal
+
+macos-option-as-alt = true
