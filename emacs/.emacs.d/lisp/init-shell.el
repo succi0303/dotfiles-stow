@@ -16,7 +16,7 @@
 
 (use-package eshell-toggle
   :ensure t
-  :bind (("C-c ." . eshell-toggle))
+  :bind (("C-x ," . eshell-toggle))
   :custom
   (eshell-toggle-window-side 'below)
   (eshell-toggle-size-fraction 2))
