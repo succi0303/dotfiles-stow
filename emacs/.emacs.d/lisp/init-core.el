@@ -10,8 +10,8 @@
 (windmove-default-keybindings)
 (setq windmove-wrap-around t)
 
-(when (eq system-type 'darwin)
-  (setq mac-command-modifier 'meta))
+
+(setq mac-command-modifier 'meta)
 
 (use-package which-key
   :config (which-key-mode))

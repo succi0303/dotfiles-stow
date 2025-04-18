@@ -11,11 +11,15 @@
   :bind
   (("C-c a" . org-agenda)
    ("C-c c" . org-capture)
-   ("C-x n s" . org-narrow-subtree)
-   ("C-x n w" . widen)
    :map org-mode-map
    ("<RET>" . #'org-insert-heading-respect-content)
    ("C-<RET>" . #'newline))
+   ("C-x n s" . org-narrow-subtree)
+   ("C-x n w" . widen)
+   ("C-S-<up>" . org-metaup)
+   ("C-S-<down>" . org-metadown)
+   ("C-S-<right>" . org-metaright)
+   ("C-S-<left>" . org-metaleft)
   :config
   (setq org-directory "~/org/"
         org-default-notes-file "~/org/inbox.org"
@@ -53,8 +57,8 @@
            (file "inbox.org")
            "* %?\n  %U\n  %a" :prepend t)
           ("t" "Todo" entry
-           (file+headline "tasks.org" "TASKS")
-           "* TODO %?\n  %U\n  %a")
+           (file "tasks.org")
+           "* TODO %?\n  %U\n  %a" :prepend t)
           ("n" "Note" entry
            (file+headline "notes.org" "NOTES")
            "* %?\n  %U\n  %a")

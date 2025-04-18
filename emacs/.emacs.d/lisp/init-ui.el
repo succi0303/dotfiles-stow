@@ -21,10 +21,11 @@
   (setq modus-themes-italic-constructs nil
 	modus-themes-bold-constructs nil)
   (load-theme 'modus-vivendi)
-  (add-to-list 'default-frame-alist '(background-color . "unspecified-bg"))
+  ;(add-to-list 'default-frame-alist '(background-color . "unspecified-bg"))
+  (add-to-list 'default-frame-alist '(background-color . "#1e1e1e"))
   
   ;; toggle background transparency
-  (defvar my/transparent-background-enabled t
+  (defvar my/transparent-background-enabled nil
     "Whether the transparent background is enabled.")
   (defun my/toggle-transparent-background ()
     "Toggle Emacs background transparency (terminal-compatible)."
@@ -37,8 +38,7 @@
 	(set-face-background 'default "unspecified-bg" (selected-frame))
 	(message "transparent on!")))
     (setq my/transparent-background-enabled (not my/transparent-background-enabled)))
-  (global-set-key (kbd "C-c u") #'my/toggle-transparent-background)
-  )
+  (global-set-key (kbd "C-c u") #'my/toggle-transparent-background))
 
 (use-package smart-mode-line
   :ensure t
