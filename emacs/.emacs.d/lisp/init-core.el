@@ -9,9 +9,16 @@
 (transient-mark-mode t)
 (windmove-default-keybindings)
 (setq windmove-wrap-around t)
-
-
 (setq mac-command-modifier 'meta)
+
+(use-package emacs
+  :init
+  (defun my/reload-init-file ()
+    "Reload Emacs init.el file."
+    (interactive)
+    (load-file (expand-file-name "init.el" user-emacs-directory)))
+  :bind
+  (("C-c r" . my/reload-init-file)))
 
 (use-package which-key
   :config (which-key-mode))

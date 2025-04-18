@@ -39,5 +39,6 @@
 (require 'init-org)
 (require 'init-git)
 (require 'init-prog)
+(require 'init-shell)
 
 ;;; init.el ends here

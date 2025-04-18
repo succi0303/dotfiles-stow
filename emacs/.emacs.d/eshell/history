@@ -1,0 +1,16 @@
+ls
+exit
+ls
+exit
+ls
+ll
+ls -al
+emacs init-org.el 
+(find-file init-org.el)
+ls -al
+exit
+ls
+ls -al
+e ./init-prog.el
+ls
+e ./init-package.el
