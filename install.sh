@@ -15,6 +15,6 @@ sudo apt install -y \
 # dotfiles
 
 DOTDIR="$( cd "$( dirname "$0" )" && pwd )"
-stow -d $DOTDIR tmux
-stow -d $DOTDIR emacs
-stow -d $DOTDIR vim
+stow -d $DOTDIR -t $HOME tmux
+stow -d $DOTDIR -t $HOME emacs
+stow -d $DOTDIR -t $HOME vim
