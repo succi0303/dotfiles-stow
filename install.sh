@@ -30,11 +30,10 @@ stow -d $DOTDIR -t $HOME mise
 # mise
 curl https://mise.run | sh
 eval "$(~/.local/bin/mise activate)"
+mise trust
 mise install
 echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
 
 # vim
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-npm install -g bash-language-server

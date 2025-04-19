@@ -9,7 +9,6 @@
   (add-to-list 'eglot-server-programs
 	       '(python-mode . ("pyright-langserver" "--stdio"))
 	       '(sh-mode . ("bash-language-server" "start"))
-	       '(terraform-mode . '("terraform-ls" "serve"))
 	       )
   )
   
