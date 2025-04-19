@@ -4,7 +4,6 @@ python 3
 rust latest
 
 black latest
-nano latest
 ripgrep latest
 terraform latest
 terraform-ls latest

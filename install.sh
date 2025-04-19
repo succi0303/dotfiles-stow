@@ -13,7 +13,8 @@ sudo apt install -y \
      git \
      tig \
      stow \
-     tmux\
+     tmux \
+     nano \
      emacs-nox \
      emacs-common
 
