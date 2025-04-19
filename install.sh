@@ -2,14 +2,8 @@
 
 # install packages
 
-apt-install() {
-  echo "install $@"
-  sudo apt install -y "$@"
-}
-
 sudo add-apt-repository -y ppa:ubuntuhandbook1/emacs
 sudo apt update && sudo apt upgrade -y
-
 sudo apt install -y \
      git \
      tig \
