@@ -27,7 +27,7 @@ stow -d $DOTDIR -t $HOME mise
 
 # mise
 curl https://mise.run | sh
-eval "$(~/local/bin/mise activate)"
+eval "$(~/.local/bin/mise activate)"
 echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
 
 mise install
