@@ -15,6 +15,7 @@ sudo apt install -y \
      stow \
      tmux \
      nano \
+     vim \
      emacs-nox \
      emacs-common
 
