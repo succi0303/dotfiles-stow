@@ -28,7 +28,7 @@ stow -d $DOTDIR -t $HOME mise
 # mise
 curl https://mise.run | sh
 echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
-mise install
+eval "$(~/.local/bin/mise install)"
 
 # vim
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
