@@ -17,6 +17,9 @@ sudo apt install -y \
      nano \
      vim \
      vim-gui-common \
+     vim-runtime
+
+sudo apt install -y --no-install-recommends \
      emacs-nox \
      emacs-common
 
