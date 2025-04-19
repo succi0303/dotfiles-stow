@@ -1,9 +1,7 @@
 go latest
 node 22
 python 3
-rust latest
 
 black latest
-ripgrep latest
 uv latest
 
