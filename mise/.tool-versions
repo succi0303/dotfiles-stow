@@ -1,1 +1,12 @@
-nodejs 22.14.0
+go latest
+node 22
+python 3
+rust latest
+
+black latest
+nano latest
+ripgrep latest
+terraform latest
+terraform-ls latest
+uv latest
+vim latest
