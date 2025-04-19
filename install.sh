@@ -16,6 +16,7 @@ sudo apt install -y \
      tmux \
      nano \
      vim \
+     vim-gui-common \
      emacs-nox \
      emacs-common
 
