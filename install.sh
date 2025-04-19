@@ -5,12 +5,16 @@
 sudo add-apt-repository -y ppa:ubuntuhandbook1/emacs
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y \
+     curl \
      git \
      tig \
      stow \
      tmux\
      emacs-nox \
      emacs-common
+
+# mise
+curl https://mise.run | sh
 
 # dotfiles
 
@@ -19,9 +23,8 @@ stow -d $OUTDIR -t $HOME bash
 stow -d $DOTDIR -t $HOME tmux
 stow -d $DOTDIR -t $HOME emacs
 stow -d $DOTDIR -t $HOME vim
+stow -d $DOTDIR -t $HOME mise
 
-# mise
-curl https://mise.run | sh
 
 # vim
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
