@@ -15,6 +15,14 @@ sudo apt install -y \
 # dotfiles
 
 DOTDIR="$( cd "$( dirname "$0" )" && pwd )"
+stow -d $OUTDIR -t $HOME bash
 stow -d $DOTDIR -t $HOME tmux
 stow -d $DOTDIR -t $HOME emacs
 stow -d $DOTDIR -t $HOME vim
+
+# mise
+curl https://mise.run | sh
+
+# vim
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
