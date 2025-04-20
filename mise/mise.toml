@@ -6,7 +6,12 @@
 # npm
 "npm:npm" = "latest"
 "npm:bash-language-server" = "latest"
+"npm:eslint" = "latest"
+"npm:prettier" = "latest"
 "npm:pyright" = "latest"
+"npm:typescript" = "latest"
+"npm:typescript-language-server" = "latest"
+"npm:vscode-langservers-extracted" = "latest"
 
 # pipx
 "pipx:black" = { version = "latest" }
