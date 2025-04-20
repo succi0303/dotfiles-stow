@@ -65,6 +65,10 @@
   :custom
   (python-shell-interpreter "python3"))
 
+(use-package pyvenv
+  :config
+  (pyvenv-mode 1))
+
 (use-package blacken
   :hook (python-mode . blacken-mode)
   :config
