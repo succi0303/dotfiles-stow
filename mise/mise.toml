@@ -10,3 +10,8 @@
 # pipx
 "pipx:black" = { version = "latest" }
 "pipx:python-language-server" = { version = "latest" }
+
+# terraform
+"terraform" = "latest"
+"terraform-ls" = "latest"
+

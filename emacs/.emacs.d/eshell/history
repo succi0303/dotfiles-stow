@@ -21,3 +21,21 @@ e journal/2025-04.org
 ls
 mise trust
 mise install
+ls
+(format "mise which %s" "terraform-ls")
+(shell-command-to-string (format "mise which %s" "terraform-ls"))
+(shell-command-to-string (format "mise which %s 2>/dev/null" "terraform-ls"))
+(string-trim (shell-command-to-string (format "mise which %s 2>/dev/null" "terraform-ls")))
+ls
+(mise-whitch "terraform-ls")
+(mise-which "terraform-ls")
+ls
+(mise-which "terraform-ls")
+ls
+(mise-which "terraform-ls")
+ls
+(mise-which "terraform-ls")
+ls
+(mise-which "terraform-ls")
+ls
+(mise-which "bash-language-server")

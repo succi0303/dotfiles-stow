@@ -3,17 +3,24 @@
 ;; Language support, LSP (eglot), and code editing enhancements.
 ;;; Code:
 
+(use-package flymake
+  :defer t)
+
+(use-package flycheck
+  :ensure t
+  :hook (terraform-mode . flycheck-mode))
+
+;; eglot
 (use-package eglot
   :defer t
   :config
+  (defun mise-which (tool-name)
+    (string-trim (shell-command-to-string (format "mise which %s" tool-name))))
   (add-to-list 'eglot-server-programs
-	       '(python-mode . ("pyright-langserver" "--stdio"))
-	       '(sh-mode . ("bash-language-server" "start"))
-	       )
+	       '(sh-mode . ((,mise-which "bash-language-server") "start"))
+	       '(terraform-mode . ((,mise-which "terraform-ls") "serve")))
   )
-  
-(use-package flymake
-  :defer t)
+
 
 ;; python
 (use-package python
@@ -36,9 +43,14 @@
 ;; terraform
 (use-package terraform-mode
   :mode ("\\.tf\\'" . terraform-mode)
-  :hook ((terraform-mode . terraform-format-on-save-mode))
+  :hook (
+	 (terraform-mode . eglot-ensure)
+	 (terraform-mode . terraform-format-on-save-mode))
   :config
-  (setq terraform-format-on-save-mode t))
+  (setq terraform-indent-level 2))
+
+(use-package hcl-mode
+  :ensure t)
 
 (provide 'init-prog)
 ;;; init-prog.el ends here

@@ -64,7 +64,7 @@
            "* %?\n  %U\n  %a")
 	  ("a" "Anki flashcard" entry
 	   (file "~/org/anki/inbox.org")
-	   "* %^{front}\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: default-deck\n:ANKI_TAGS: %^{Tags}\n:END:\n%?")
+	   "* %^{front}\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: default-deck\n:ANKI_TAGS: %^{Tags}\n:END:\n%?" :prepend t)
 	  ))
   ;; org-agenda
   (setq org-agenda-files (list org-directory)

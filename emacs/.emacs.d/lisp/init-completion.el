@@ -10,7 +10,7 @@
   :custom
   (vertico-count 20)
   (vertico-cycle t)
-  (vertico-resize t))
+  (vertico-resize nil))
 
 (use-package marginalia
   :ensure t
