@@ -24,6 +24,11 @@
   :custom
   (python-shell-interpreter "python3"))
 
+(use-package blacken
+  :hook (python-mode . blacken-mode)
+  :config
+  (setq blacken-line-length 88))
+
 ;; shell script
 (use-package sh-script
   :mode (("\\.\\(sh\\|bash\\|zsh\\)\\'" . sh-mode))
