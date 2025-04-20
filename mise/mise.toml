@@ -3,6 +3,8 @@
 "python" = '3'
 "node" = '22'
 
+"pandoc" = "latest"
+
 # npm
 "npm:npm" = "latest"
 "npm:bash-language-server" = "latest"

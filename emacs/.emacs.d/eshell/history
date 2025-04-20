@@ -42,3 +42,5 @@ ls
 ls
 terraform-ls
 terraform-ls serve
+ls
+rm test.html 
