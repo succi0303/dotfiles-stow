@@ -6,21 +6,13 @@
 (use-package flymake
   :defer t)
 
-(use-package flycheck
-  :ensure t
-  :hook (terraform-mode . flycheck-mode))
-
 ;; eglot
 (use-package eglot
   :defer t
   :config
-  (defun mise-which (tool-name)
-    (string-trim (shell-command-to-string (format "mise which %s" tool-name))))
   (add-to-list 'eglot-server-programs
-	       '(sh-mode . ((,mise-which "bash-language-server") "start"))
-	       '(terraform-mode . ((,mise-which "terraform-ls") "serve")))
-  )
-
+	       '(python-mode . ("pyright-langserver" "--stdio"))
+	       '(sh-mode . ("bash-language-server" "start"))))
 
 ;; python
 (use-package python
@@ -43,9 +35,7 @@
 ;; terraform
 (use-package terraform-mode
   :mode ("\\.tf\\'" . terraform-mode)
-  :hook (
-	 (terraform-mode . eglot-ensure)
-	 (terraform-mode . terraform-format-on-save-mode))
+  :hook ((terraform-mode . eglot-ensure))
   :config
   (setq terraform-indent-level 2))
 

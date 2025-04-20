@@ -39,3 +39,6 @@ ls
 (mise-which "terraform-ls")
 ls
 (mise-which "bash-language-server")
+ls
+terraform-ls
+terraform-ls serve

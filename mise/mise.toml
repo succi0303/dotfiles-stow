@@ -6,10 +6,10 @@
 # npm
 "npm:npm" = "latest"
 "npm:bash-language-server" = "latest"
+"npm:pyright" = "latest"
 
 # pipx
 "pipx:black" = { version = "latest" }
-"pipx:python-language-server" = { version = "latest" }
 
 # terraform
 "terraform" = "latest"
