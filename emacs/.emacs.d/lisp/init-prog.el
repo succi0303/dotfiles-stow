@@ -11,10 +11,12 @@
   :defer t
   :config
   (add-to-list 'eglot-server-programs
-	       '(python-mode . ("pyright-langserver" "--stdio"))
-	       '(sh-mode . ("bash-language-server" "start"))))
+               '(python-mode . ("pyright-langserver" "--stdio")))
+  (add-to-list 'eglot-server-programs
+               '(sh-mode . ("bash-language-server" "start")))
+  (add-to-list 'eglot-server-programs
+               '(terraform-mode . ("terraform-ls" "serve"))))
 
-;; python
 (use-package python
   :mode ("\\.py\\'" . python-mode)
   :hook ((python-mode . eglot-ensure)
