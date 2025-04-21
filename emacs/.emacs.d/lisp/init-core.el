@@ -22,28 +22,18 @@
 
 ;; window
 (use-package ace-window
-  :bind ("M-o" . ace-window)
-  :config
-  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
-	aw-background t
-	aw-dispatch-always nil
-	aw-dispatch-alist
-        '((?x aw-delete-window "Delete Window")
-          (?m aw-swap-window "Swap Windows")
-          (?M aw-move-window "Move Window")
-          (?c aw-copy-window "Copy Window")
-          (?s aw-switch-buffer-other-window "Switch Buffer Other Window")
-          (?n aw-flip-window)
-          (?u aw-switch-buffer-in-window "Switch Buffer")
-          (?f aw-split-window-fair "Split Fair Window")
-          (?v aw-split-window-vert "Split Vert Window")
-          (?h aw-split-window-horz "Split Horz Window"))))
+  :bind ("C-c w" . ace-window)
+  :custom
+  (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  (aw-scope 'frame)
+  (aw-background t))
 
 (use-package golden-ratio
+  :diminish
   :config
   (golden-ratio-mode 1)
   (setq golden-ratio-auto-scale t)
-  (add-to-list 'golden-ratio-exclude-modes "ediff-mode"))
+  (add-to-list 'golden-ratio-extra-commands 'ace-window))
 
 (use-package winner
   :ensure nil
@@ -53,6 +43,56 @@
 	 ("C-c <right>" . winner-redo)))
 
 ;; buffer & tab
+(use-package ibuffer
+  :ensure nil
+  :bind ("C-x C-b" . ibuffer)
+  :config
+  (setq ibuffer-saved-filter-groups
+        '(("default"
+           ("dired" (mode . dired-mode))
+           ("org" (mode . org-mode))
+           ("programming" (or
+                           (mode . python-mode)
+                           (mode . emacs-lisp-mode)
+                           (mode . c-mode)))
+           ("shell" (or
+                     (mode . eshell-mode)
+                     (mode . shell-mode)
+                     (mode . term-mode)
+                     (mode . vterm-mode)))
+           ("magit" (name . "^magit"))
+           ("help" (or
+                    (name . "\*Help\*")
+                    (name . "\*Apropos\*")
+                    (name . "\*info\*")))
+           ("internal" (name . "^\*.*\*$")))))
+  (add-hook 'ibuffer-mode-hook
+            (lambda ()
+              (ibuffer-switch-to-saved-filter-groups "default"))))
+
+(use-package ibuffer-projectile
+  :after ibuffer
+  :config
+  (add-hook 'ibuffer-hook
+            (lambda ()
+              (ibuffer-projectile-set-filter-groups)
+              (unless (eq ibuffer-sorting-mode 'alphabetic)
+                (ibuffer-do-sort-by-alphabetic)))))
+
+(use-package midnight
+  :ensure nil
+  :config
+  (midnight-mode)
+  (setq clean-buffer-list-delay-general 1))
+
+(use-package uniquify
+  :ensure nil
+  :config
+  (setq uniquify-buffer-name-style 'forward)
+  (setq uniquify-separator "/")
+  (setq uniquify-after-kill-buffer-p t)
+  (setq uniquify-ignore-buffers-re "^\\*"))
+
 (use-package centaur-tabs
   :demand
   :config
@@ -66,42 +106,12 @@
   (setq centaur-tabs-group-by-projectile-project t)
   (setq centaur-tabs-excluded-buffers '("*Messages*" "*scratch*" "*Completions*")))
 
-;; workspace & project
-(use-package perspective
-  :bind (("C-x k" . persp-kill-buffer*) 
-         ("C-x C-b" . persp-list-buffers))
-  :custom
-  (persp-mode-prefix-key (kbd "C-c M-p"))
-  :config
-  (persp-mode)
-  (define-key perspective-map (kbd "s") #'persp-switch)
-  (define-key perspective-map (kbd "k") #'persp-remove-buffer)
-  (define-key perspective-map (kbd "c") #'persp-kill)
-  (define-key perspective-map (kbd "r") #'persp-rename)
-  (define-key perspective-map (kbd "a") #'persp-add-buffer)
-  (define-key perspective-map (kbd "A") #'persp-set-buffer)
-  (define-key perspective-map (kbd "b") #'persp-switch-to-buffer)
-  (defun persp-update-frames ()
-    (walk-windows
-     (lambda (w)
-       (let ((frame (window-frame w)))
-         (when (and (frame-live-p frame)
-                    (not (member frame persp-inhibit-display-frames)))
-           (let ((persp (persp-curr))
-                 (name (safe-persp-name (persp-curr))))
-             (when name
-               (set-frame-parameter frame 'title
-                                   (format "%s - Emacs" name)))))))
-     nil t)
-    (force-mode-line-update t))
-  (add-hook 'persp-activated-functions
-            (lambda (_) (persp-update-frames))))
-
+;; project
 (use-package projectile
   :config
   (projectile-mode +1)
   :bind-keymap
-  ("C-c p" . projectile-command-map)
+  ("C-c ," . projectile-command-map)
   :bind
   (:map projectile-command-map
         ("p" . projectile-persp-switch-project)))

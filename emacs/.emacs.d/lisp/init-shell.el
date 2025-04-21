@@ -34,7 +34,8 @@
 (use-package dired
   :ensure nil
   :hook (dired-mode . dired-hide-details-mode)
-  :bind (:map dired-mode-map
+  :bind (("C-c d" . dired-jump)
+	 :map dired-mode-map
 	      ("E" . wdired-change-to-wdired-mode)
 	      ("/" . dired-narrow)
 	      ("," . dired-create-empty-file)
