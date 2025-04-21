@@ -103,13 +103,7 @@
   (setq projectile-indexing-method 'alien)
   (setq projectile-switch-project-action #'projectile-find-file)
   :bind-keymap
-  ("C-x p" . projectile-command-map)
-  :bind
-  (:map projectile-command-map
-        ("p" . projectile-persp-switch-project)))
-
-(use-package persp-projectile
-  :after (perspective projectile))
+  ("C-x p" . projectile-command-map))
 
 (use-package which-key
   :config (which-key-mode))
