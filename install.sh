@@ -6,6 +6,8 @@ sudo add-apt-repository -y ppa:ubuntuhandbook1/emacs
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y \
      gpg \
+     cmake \
+     libtool-bin \
      gpg-agent \
      sudo \
      curl \

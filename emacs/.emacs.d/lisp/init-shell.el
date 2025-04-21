@@ -3,31 +3,38 @@
 ;; Shell packages and configurations
 ;;; init-shell.el --- -*- coding=utf-8 -*-
 ;;; Code:
-(use-package eshell
-  :hook
-  (eshell-mode . (lambda ()
-		   (eshell/alias "e" "find-file $1")))
-  :config
-  (setq eshell-history-size 10000
-	eshell-hist-ignoredups t
-	eshell-save-history-on-exit t
-	eshell-prefer-lisp-functions nil
-	eshell-banner-message ""))
 
-(use-package eshell-toggle
+;; vterm
+(use-package vterm
   :ensure t
-  :bind (("C-x ," . eshell-toggle))
-  :custom
-  (eshell-toggle-window-side 'below)
-  (eshell-toggle-size-fraction 2))
-
-(use-package eshell-git-prompt
-  :after eshell
+  :commands vterm
   :config
-  (eshell-git-prompt-use-theme 'powerline))
+  (setq vterm-max-scrollback 10000)
+  (setq comint-prompt-read-only t))
 
-(use-package eshell-did-you-mean
-  :hook (eshell-mode . eshell-did-you-mean-setup))
+(use-package vterm-toggle
+  :ensure t
+  :custom
+  (vterm-toggle-fullscreen-p nil)
+  (vterm-toggle-use-dedcated-buffer t)
+  :bind (("C-x ," . vterm-toggle)))
+
+;; dired
+(use-package dired
+  :ensure nil
+  :custom
+  (dired-listing-switches "-alh --group-directories-first")
+  (dired-dwim-target t)
+  (dired-hide-details-hide-symlink-targets nil)
+  :config
+  (add-hook 'dired-mode-hook #'dired-hide-details-mode))
+
+(use-package dired-subtree
+  :ensure t
+  :bind (:map dired-mode-map
+	      ("<tab>" . dired-subtree-toggle)
+	      ("<C-tab>" . dired-subtree-cycle)))
+
 
 (provide 'init-shell)
 ;;; init-ui.el ends here
