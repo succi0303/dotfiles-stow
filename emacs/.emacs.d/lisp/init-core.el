@@ -42,7 +42,7 @@
   :bind (("C-c <left>" . winner-undo)
 	 ("C-c <right>" . winner-redo)))
 
-;; buffer & tab
+;; buffer
 (use-package ibuffer
   :ensure nil
   :bind ("C-x C-b" . ibuffer)
@@ -93,25 +93,17 @@
   (setq uniquify-after-kill-buffer-p t)
   (setq uniquify-ignore-buffers-re "^\\*"))
 
-(use-package centaur-tabs
-  :demand
-  :config
-  (centaur-tabs-mode t)
-  (setq centaur-tabs-style "bar")
-  (setq centaur-tabs-height 32)
-  (setq centaur-tabs-set-bar 'left)
-  (setq centaur-tabs-set-modified-marker t)
-  (setq centaur-tabs-modified-marker "*")
-  (setq centaur-tabs-cycle-scope 'tabs)
-  (setq centaur-tabs-group-by-projectile-project t)
-  (setq centaur-tabs-excluded-buffers '("*Messages*" "*scratch*" "*Completions*")))
 
 ;; project
 (use-package projectile
+  :diminish
   :config
   (projectile-mode +1)
+  (setq projectile-completion-system 'default)
+  (setq projectile-indexing-method 'alien)
+  (setq projectile-switch-project-action #'projectile-find-file)
   :bind-keymap
-  ("C-c ," . projectile-command-map)
+  ("C-x p" . projectile-command-map)
   :bind
   (:map projectile-command-map
         ("p" . projectile-persp-switch-project)))

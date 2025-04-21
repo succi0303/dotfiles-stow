@@ -1,21 +1,33 @@
 
 ;;; Code:
 
-
 ;; theme with transparent background
 (use-package emacs
   :config
   ;; general
   (menu-bar-mode -1)
   (tool-bar-mode -1)
-  (tab-bar-mode t)
   (line-number-mode t)
   (column-number-mode t)
   (global-display-line-numbers-mode t)
   (custom-set-variables '(display-line-number-width-start t))
   (global-hl-line-mode t)
   (global-visual-line-mode t)
-  
+
+  ;; tab
+  (use-package centaur-tabs
+  :demand
+  :config
+  (centaur-tabs-mode t)
+  (setq centaur-tabs-style "bar")
+  (setq centaur-tabs-height 32)
+  (setq centaur-tabs-set-bar 'left)
+  (setq centaur-tabs-set-modified-marker t)
+  (setq centaur-tabs-modified-marker "*")
+  (setq centaur-tabs-cycle-scope 'tabs)
+  (setq centaur-tabs-group-by-projectile-project t)
+  (setq centaur-tabs-excluded-buffers '("*Messages*" "*scratch*" "*Completions*")))
+
   ;; theme
   (require-theme 'modus-themes)
   (setq modus-themes-italic-constructs nil
