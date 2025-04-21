@@ -20,6 +20,95 @@
   (setq windmove-wrap-around t)
   (setq mac-command-modifier 'meta))
 
+;; window
+(use-package ace-window
+  :bind ("M-o" . ace-window)
+  :config
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
+	aw-background t
+	aw-dispatch-always nil
+	aw-dispatch-alist
+        '((?x aw-delete-window "Delete Window")
+          (?m aw-swap-window "Swap Windows")
+          (?M aw-move-window "Move Window")
+          (?c aw-copy-window "Copy Window")
+          (?s aw-switch-buffer-other-window "Switch Buffer Other Window")
+          (?n aw-flip-window)
+          (?u aw-switch-buffer-in-window "Switch Buffer")
+          (?f aw-split-window-fair "Split Fair Window")
+          (?v aw-split-window-vert "Split Vert Window")
+          (?h aw-split-window-horz "Split Horz Window"))))
+
+(use-package golden-ratio
+  :config
+  (golden-ratio-mode 1)
+  (setq golden-ratio-auto-scale t)
+  (add-to-list 'golden-ratio-exclude-modes "ediff-mode"))
+
+(use-package winner
+  :ensure nil
+  :config
+  (winner-mode 1)
+  :bind (("C-c <left>" . winner-undo)
+	 ("C-c <right>" . winner-redo)))
+
+;; buffer & tab
+(use-package centaur-tabs
+  :demand
+  :config
+  (centaur-tabs-mode t)
+  (setq centaur-tabs-style "bar")
+  (setq centaur-tabs-height 32)
+  (setq centaur-tabs-set-bar 'left)
+  (setq centaur-tabs-set-modified-marker t)
+  (setq centaur-tabs-modified-marker "*")
+  (setq centaur-tabs-cycle-scope 'tabs)
+  (setq centaur-tabs-group-by-projectile-project t)
+  (setq centaur-tabs-excluded-buffers '("*Messages*" "*scratch*" "*Completions*")))
+
+;; workspace & project
+(use-package perspective
+  :bind (("C-x k" . persp-kill-buffer*) 
+         ("C-x C-b" . persp-list-buffers))
+  :custom
+  (persp-mode-prefix-key (kbd "C-c M-p"))
+  :config
+  (persp-mode)
+  (define-key perspective-map (kbd "s") #'persp-switch)
+  (define-key perspective-map (kbd "k") #'persp-remove-buffer)
+  (define-key perspective-map (kbd "c") #'persp-kill)
+  (define-key perspective-map (kbd "r") #'persp-rename)
+  (define-key perspective-map (kbd "a") #'persp-add-buffer)
+  (define-key perspective-map (kbd "A") #'persp-set-buffer)
+  (define-key perspective-map (kbd "b") #'persp-switch-to-buffer)
+  (defun persp-update-frames ()
+    (walk-windows
+     (lambda (w)
+       (let ((frame (window-frame w)))
+         (when (and (frame-live-p frame)
+                    (not (member frame persp-inhibit-display-frames)))
+           (let ((persp (persp-curr))
+                 (name (safe-persp-name (persp-curr))))
+             (when name
+               (set-frame-parameter frame 'title
+                                   (format "%s - Emacs" name)))))))
+     nil t)
+    (force-mode-line-update t))
+  (add-hook 'persp-activated-functions
+            (lambda (_) (persp-update-frames))))
+
+(use-package projectile
+  :config
+  (projectile-mode +1)
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :bind
+  (:map projectile-command-map
+        ("p" . projectile-persp-switch-project)))
+
+(use-package persp-projectile
+  :after (perspective projectile))
+
 (use-package which-key
   :config (which-key-mode))
 
@@ -37,18 +126,6 @@
   :bind*
   ("C-/" . undo-fu-only-undo)
   ("M-/" . undo-fu-only-redo))
-
-;; project
-(use-package projectile
-  :config
-  (projectile-mode 1))
-
-(use-package otpp
-  :ensure t
-  :after project
-  :init
-  (otpp-mode 1)
-  (otpp-override-mode 1))
 
 ;; dashboard
 (use-package dashboard

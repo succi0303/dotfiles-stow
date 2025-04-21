@@ -8,6 +8,11 @@
 (use-package vterm
   :ensure t
   :commands vterm
+  :bind (:map vterm-mode-map
+	      ("C-c C-c" . vterm-send-C-c)
+	      ("C-c C-l" . vterm-clear-scrollback)
+	      ("C-c C-n" . vterm-next-prompt)
+	      ("C-c C-p" . vterm-previous-prompt))
   :config
   (setq vterm-max-scrollback 10000)
   (setq comint-prompt-read-only t))
@@ -17,17 +22,54 @@
   :custom
   (vterm-toggle-fullscreen-p nil)
   (vterm-toggle-use-dedcated-buffer t)
-  :bind (("C-x ," . vterm-toggle)))
+  :bind (("C-c t" . vterm-toggle)))
+
+(use-package multi-vterm
+  :after vterm
+  :bind (("C-c v n" . multi-vterm)
+	 ("C-c v p" . multi-vterm-prev)
+	 ("C-c v t" . multi-vterm-next)))
 
 ;; dired
 (use-package dired
   :ensure nil
-  :custom
-  (dired-listing-switches "-alh --group-directories-first")
-  (dired-dwim-target t)
-  (dired-hide-details-hide-symlink-targets nil)
+  :hook (dired-mode . dired-hide-details-mode)
+  :bind (:map dired-mode-map
+	      ("E" . wdired-change-to-wdired-mode)
+	      ("/" . dired-narrow)
+	      ("," . dired-create-empty-file)
+	      ("C-c C-e" . dired-toggle-read-only)
+	      (";" . dired-subtree-toggle))
   :config
+  (setq dired-recursive-copies 'always
+	dired-recursive-deletes 'top
+	dired-listing-switches "-alhG --group-directories-first"
+	dired-dwim-target t
+	dired-case-fold-search t)
   (add-hook 'dired-mode-hook #'dired-hide-details-mode))
+
+(use-package wdired
+  :ensure nil
+  :after dired
+  :config
+  (setq wdired-allow-to-change-permissions t
+	wdired-create-parent-directories t))
+
+(use-package dired-aux
+  :ensure nil
+  :config
+  (add-to-list 'dired-compress-file-suffixes
+	       '("\\.zip\\'" ".zip" "unzip"))
+  (add-to-list 'dired-compress-file-suffixes
+	       '("\\.tar\\.gz\\'" ".tar.gz" "tar -xzf")))
+
+(use-package dired-rsync
+  :bind (:map dired-mode-map
+	      ("r" . dired-rsync)))
+
+(use-package dired-quick-sort
+  :bind (:map dired-mode-map
+	      ("s" . hydra-dired-quick-sort/body)))
 
 (use-package dired-subtree
   :ensure t

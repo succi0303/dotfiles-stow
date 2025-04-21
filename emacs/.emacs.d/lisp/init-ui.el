@@ -121,16 +121,5 @@
           (pulse-momentary-highlight-one-line (point)))))))
 (advice-add 'show-paren-function :after #'my/pulse-matching-paren)
 
-;; sidebar
-(use-package treemacs
-  :ensure t
-  :defer t
-  :bind
-  (:map global-map
-	("C-c t" . treemacs))
-  :custom
-  (treemacs-width 30)
-  (treemacs-no-png-images t))
-
 (provide 'init-ui)
 ;;; init-ui.el ends here
