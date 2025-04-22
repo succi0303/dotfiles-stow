@@ -200,27 +200,5 @@ alias emacs='emacs -nw'
 
 alias ls='ls -GwF'
 
-# awscli
-complete -C '$(brew --prefix)/bin/aws_completer' aws
-
-# fzf
-alias fzf='fzf --reverse --height=50%'
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-function fzf-ghq() {
-  local src=$(ghq list | fzf --preview "ls -la $(ghq root)/{} | tail -n+4 | awk '{print \$9\"/\"\$6\"/\"\$7 \" \" \$10}'")
-  if [ -n "$src" ]; then
-    BUFFER="cd $(ghq root)/$src"
-    zle accept-line
-  fi
-  zle -R -c
-}
-zle -N fzf-ghq
-bindkey '^gr' fzf-ghq
-
-# anyenv
-export PATH="$HOME/.anyenv/bin:$PATH"
-eval "$(anyenv init -)"
-
-# starship
-eval "$(starship init zsh)"
+# mise
+eval "$(~/.local/bin/mise activate zsh)
