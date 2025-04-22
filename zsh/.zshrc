@@ -201,4 +201,7 @@ alias emacs='emacs -nw'
 alias ls='ls -GwF'
 
 # mise
-eval "$(~/.local/bin/mise activate zsh)
+eval "$(~/.local/bin/mise activate zsh)"
+
+# starship
+eval "$(starship init zsh)"
