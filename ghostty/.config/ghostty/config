@@ -11,3 +11,6 @@ quick-terminal-position = top
 keybind = global:ctrl+;=toggle_quick_terminal
 
 macos-option-as-alt = true
+keybind = ctrl+right=csi:"1;3C"
+keybind = ctrl+left=csi:"1;5D"
+
