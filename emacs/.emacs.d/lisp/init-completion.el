@@ -10,7 +10,7 @@
   :custom
   (vertico-count 20)
   (vertico-cycle t)
-  (vertico-resize t))
+  (vertico-resize nil))
 
 (use-package marginalia
   :ensure t
@@ -66,18 +66,19 @@
 	 :map company-search-map
 	 ("C-n" . company-select-next)
 	 ("C-p" . company-select-previous))
-  :custom
-  (company-idle-delay 0.1)
-  (company-minimum-prefix-length 2)
-  (company-dabbrev-other-buffers t)
-  (company-dabbrev-code-other-buffers t)
   :config
-  (defun my/company-dabbrev-setup ()
-    (setq-local company-backends '(company-dabbrev)))
-  (setq company-backends
-        '((company-dabbrev-code company-keywords)
-          company-files
-          company-dabbrev)))
+  (setq company-idle-delay 0.1
+	company-minimum-prefix-length 1
+	company-tooltip-align-annotations t
+	company-selection-wrap-around t
+	company-show-numbers t)
+  (with-eval-after-load 'eglot
+    (add-hook 'eglot-managed-mode-hook
+	      (lambda ()
+		(set-local company-backends '(company-capf))))))
+
+(use-package company-box
+  :hook (company-mode . company-box-mode))
 
 (provide 'init-completion)
 ;;; init-completion.el ends here

@@ -1,30 +1,29 @@
 
 ;;; Code:
 
-
 ;; theme with transparent background
 (use-package emacs
   :config
   ;; general
   (menu-bar-mode -1)
   (tool-bar-mode -1)
-  (tab-bar-mode t)
   (line-number-mode t)
   (column-number-mode t)
   (global-display-line-numbers-mode t)
   (custom-set-variables '(display-line-number-width-start t))
   (global-hl-line-mode t)
   (global-visual-line-mode t)
-  
+
   ;; theme
   (require-theme 'modus-themes)
   (setq modus-themes-italic-constructs nil
 	modus-themes-bold-constructs nil)
   (load-theme 'modus-vivendi)
-  (add-to-list 'default-frame-alist '(background-color . "unspecified-bg"))
+  ;(add-to-list 'default-frame-alist '(background-color . "unspecified-bg"))
+  (add-to-list 'default-frame-alist '(background-color . "#1e1e1e"))
   
   ;; toggle background transparency
-  (defvar my/transparent-background-enabled t
+  (defvar my/transparent-background-enabled nil
     "Whether the transparent background is enabled.")
   (defun my/toggle-transparent-background ()
     "Toggle Emacs background transparency (terminal-compatible)."
@@ -37,8 +36,7 @@
 	(set-face-background 'default "unspecified-bg" (selected-frame))
 	(message "transparent on!")))
     (setq my/transparent-background-enabled (not my/transparent-background-enabled)))
-  (global-set-key (kbd "C-c u") #'my/toggle-transparent-background)
-  )
+  (global-set-key (kbd "C-c u") #'my/toggle-transparent-background))
 
 (use-package smart-mode-line
   :ensure t
@@ -120,17 +118,6 @@
           (backward-sexp)
           (pulse-momentary-highlight-one-line (point)))))))
 (advice-add 'show-paren-function :after #'my/pulse-matching-paren)
-
-;; sidebar
-(use-package treemacs
-  :ensure t
-  :defer t
-  :bind
-  (:map global-map
-	("C-c t" . treemacs))
-  :custom
-  (treemacs-width 30)
-  (treemacs-no-png-images t))
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

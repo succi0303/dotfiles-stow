@@ -1,0 +1,7 @@
+go latest
+node 22
+python 3
+
+black latest
+uv latest
+
