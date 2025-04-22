@@ -20,3 +20,7 @@ brew "zsh"
 
 # brew install --cask
 cask "ghostty" if OS.mac?
+
+# emacs
+tap "railwaycat/emacsmacport"
+cask "emacs-mac-spacemacs-icon"
