@@ -13,7 +13,7 @@
    ("C-c c" . org-capture)
    :map org-mode-map
    ("<RET>" . #'org-insert-heading-respect-content)
-   ("C-<RET>" . #'newline))
+   ("C-c <RET>" . #'newline))
    ("C-x n s" . org-narrow-subtree)
    ("C-x n w" . widen)
    ("C-S-<up>" . org-metaup)
