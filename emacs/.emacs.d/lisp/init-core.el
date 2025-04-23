@@ -93,7 +93,6 @@
   (setq uniquify-after-kill-buffer-p t)
   (setq uniquify-ignore-buffers-re "^\\*"))
 
-
 ;; project
 (use-package projectile
   :diminish
@@ -122,6 +121,12 @@
   :bind*
   ("C-/" . undo-fu-only-undo)
   ("M-/" . undo-fu-only-redo))
+
+(use-package osx-trash
+  :if (eq system-type 'darwin)
+  :config
+  (osx-trash-setup)
+  (setq delete-by-moving-to-trash t))
 
 ;; dashboard
 (use-package dashboard
