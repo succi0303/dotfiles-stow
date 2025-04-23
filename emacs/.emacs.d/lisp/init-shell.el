@@ -46,7 +46,11 @@
 	dired-recursive-deletes 'top
 	dired-listing-switches "-alhG --group-directories-first"
 	dired-dwim-target t
+	dired-use-ls-dired t
 	dired-case-fold-search t)
+  (when (and (eq system-type 'darwin)
+	     (executable-find "gls"))
+    (setq insert-directory-program "gls"))
   (add-hook 'dired-mode-hook #'dired-hide-details-mode))
 
 (use-package wdired

@@ -4,6 +4,7 @@ cask_args appdir: "~/Applications/", require_sha: true
 # brew install
 brew "cloudflared"
 brew "cmake"
+brew "coreutils"
 brew "curl"
 brew "fzf"
 brew "git"
