@@ -16,6 +16,7 @@ sudo apt install -y \
      git \
      tig \
      stow \
+     fish \
      tmux \
      nano \
      vim \
@@ -33,6 +34,12 @@ stow -d $DOTDIR -t $HOME tmux
 stow -d $DOTDIR -t $HOME emacs
 stow -d $DOTDIR -t $HOME vim
 stow -d $DOTDIR -t $HOME mise
+
+# fish
+curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+fisher install jethrokuan/z
+fisher install jorgebucaran/git.fish
+# fisher install IlanCosman/tide@v5
 
 # mise
 curl https://mise.run | sh

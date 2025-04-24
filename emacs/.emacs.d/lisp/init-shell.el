@@ -33,55 +33,23 @@
 ;; dired
 (use-package dired
   :ensure nil
-  :hook (dired-mode . dired-hide-details-mode)
-  :bind (("C-c d" . dired-jump)
-	 :map dired-mode-map
-	      ("E" . wdired-change-to-wdired-mode)
-	      ("/" . dired-narrow)
-	      ("," . dired-create-empty-file)
-	      ("C-c C-e" . dired-toggle-read-only)
-	      (";" . dired-subtree-toggle))
+  :custom
+  (dired-listing-switches "-alh")
+  (dired-dwim-target t)
+  (dired-recursive-copies 'always)
+  (dired-recursive-deletes 'always)
+  :bind (:map dired-mode-map
+	      ("C-c o . 'dired-find-file-other-window")
+	      ("C-c C-o" . 'dired-display-file))
   :config
-  (setq dired-recursive-copies 'always
-	dired-recursive-deletes 'top
-	dired-listing-switches "-alhG --group-directories-first"
-	dired-dwim-target t
-	dired-use-ls-dired t
-	dired-case-fold-search t)
+  (require 'dired-x)
+  (setq dired-omit-files "^\\...+$")
+  (add-hook 'dired-mode-hook
+	    (lambda ()
+	      (dired-omit-mode 1)))
   (when (and (eq system-type 'darwin)
 	     (executable-find "gls"))
-    (setq insert-directory-program "gls"))
-  (add-hook 'dired-mode-hook #'dired-hide-details-mode))
-
-(use-package wdired
-  :ensure nil
-  :after dired
-  :config
-  (setq wdired-allow-to-change-permissions t
-	wdired-create-parent-directories t))
-
-(use-package dired-aux
-  :ensure nil
-  :config
-  (add-to-list 'dired-compress-file-suffixes
-	       '("\\.zip\\'" ".zip" "unzip"))
-  (add-to-list 'dired-compress-file-suffixes
-	       '("\\.tar\\.gz\\'" ".tar.gz" "tar -xzf")))
-
-(use-package dired-rsync
-  :bind (:map dired-mode-map
-	      ("r" . dired-rsync)))
-
-(use-package dired-quick-sort
-  :bind (:map dired-mode-map
-	      ("s" . hydra-dired-quick-sort/body)))
-
-(use-package dired-subtree
-  :ensure t
-  :bind (:map dired-mode-map
-	      ("<tab>" . dired-subtree-toggle)
-	      ("<C-tab>" . dired-subtree-cycle)))
-
+    (setq insert-directory-program "gls")))
 
 (provide 'init-shell)
 ;;; init-ui.el ends here
