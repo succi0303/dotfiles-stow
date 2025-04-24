@@ -35,6 +35,15 @@ stow -d $DOTDIR -t $HOME emacs
 stow -d $DOTDIR -t $HOME vim
 stow -d $DOTDIR -t $HOME mise
 
+# tmux
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+  echo "Installing tmux plugin manager (tpm)..."
+  git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
+else
+  echo "tmux plugin manager (tpm) is already installed."
+fi
+
+
 # fish
 curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
 fisher install jethrokuan/z
