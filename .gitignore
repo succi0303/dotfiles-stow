@@ -25,3 +25,10 @@ emacs/.emacs.d/.cache/
 emacs/.emacs.d/backups/
 emacs/.emacs.d/org-persist/
 emacs/.emacs.d/request/
+
+# fish
+fish/.config/fish/functions/*
+fish/.config/fish/completions/*
+fish/.config/fish/conf.d/*
+fish/.config/fish/fish_plugins
+fish/.config/fish/fish_variables
