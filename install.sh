@@ -16,8 +16,8 @@ sudo apt install -y \
      git \
      tig \
      stow \
-     fish \
      tmux \
+     powerline \
      nano \
      vim \
      vim-gui-common \
@@ -31,6 +31,7 @@ sudo apt install -y --no-install-recommends \
 
 DOTDIR="$( cd "$( dirname "$0" )" && pwd )"
 stow -d $DOTDIR -t $HOME tmux
+sotw -d $DOTDIR -t $HOME poweline
 stow -d $DOTDIR -t $HOME emacs
 stow -d $DOTDIR -t $HOME vim
 stow -d $DOTDIR -t $HOME mise
@@ -43,19 +44,11 @@ else
   echo "tmux plugin manager (tpm) is already installed."
 fi
 
-
-# fish
-curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
-fisher install jethrokuan/z
-fisher install jorgebucaran/git.fish
-# fisher install IlanCosman/tide@v5
-
 # mise
 curl https://mise.run | sh
 eval "$(~/.local/bin/mise activate)"
 mise trust
 mise install
-echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
 
 # vim
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \

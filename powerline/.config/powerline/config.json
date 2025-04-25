@@ -1,0 +1,9 @@
+{
+    "colors": {
+        "my_blue": {
+            "fg": "gray4",
+            "bg": "darkestblue",
+            "attrs": []
+        }
+    }
+}
