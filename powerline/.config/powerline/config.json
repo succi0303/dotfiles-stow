@@ -1,9 +1,15 @@
 {
-    "colors": {
-        "my_blue": {
-            "fg": "gray4",
-            "bg": "darkestblue",
-            "attrs": []
-        }
+    "common": {
+	"term_truecolor": true
+    },
+    "ext": {
+	"shell": {
+	    "colorscheme": "default",
+	    "theme": "default",
+	    "local_themes": {
+		"continuation": "continuation",
+		"select": "select"
+	    }
+	}
     }
 }
