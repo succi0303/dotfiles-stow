@@ -117,6 +117,13 @@ if ! shopt -oq posix; then
 fi
 
 ## ─────────────────────────────────────
+## Emacs
+## ────────────────────────────────────
+alias ec='emacsclient -t'
+alias emacsd='emacs --daemon'
+alias kill-emacsd='emacsclient -e "(kill-emacs)"""'
+
+## ─────────────────────────────────────
 ## mise (env manager)
 ## ────────────────────────────────────
 if [[ -x "$HOME/.local/bin/mise" ]]; then
@@ -124,25 +131,8 @@ if [[ -x "$HOME/.local/bin/mise" ]]; then
 fi
 
 ## ─────────────────────────────────────
-## Emacs Daemon
-## ─────────────────────────────────────
-# Emacs Daemon auto-start on SSH login
-if [[ -n "$SSH_CONNECTION" ]]; then
-    if command -v emacs &>/dev/null && [[ ! -S "$HOME/.emacs.d/server/server" ]]; then
-        emacs --daemon &>/dev/null
-    fi
-fi
-
-# Emacs aliases
-alias ec='emacsclient -t'
-alias emacsd='emacs --daemon'
-alias kill-emacsd='emacsclient -e "(kill-emacs)"""'
-
-## ─────────────────────────────────────
 ## Powerline
 ## ─────────────────────────────────────
 if [ -f /usr/share/powerline/bindings/bash/powerline.sh ]; then
     source /usr/share/powerline/bindings/bash/powerline.sh
 fi
-
-
