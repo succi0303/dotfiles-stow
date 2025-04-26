@@ -23,7 +23,6 @@
   (setq skk-start-henkan-with-inline 'ask)
   (setq skk-sticky-key ";")
   (setq skk-use-color-cursor t)
-  (setq skk-use-jisx0201-input-method t)
   (setq skk-use-look t)
   (setq skk-dcomp-activate t)
   (setq skk-dcomp-multiple-activate t)
