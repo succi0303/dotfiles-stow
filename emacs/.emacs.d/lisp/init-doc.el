@@ -14,9 +14,7 @@
   :ensure t
   :bind (("C-x j" . skk-mode))
   :hook ((skk-mode . (lambda()
-		       (require 'context-skk)))
-	 (find-file . (lambda()
-			 (skk-latin-mode t))))
+		       (require 'context-skk))))
   :init
   (setq skk-user-directory "~/.ddskk")
   (setq default-input-method "japanese-skk")
