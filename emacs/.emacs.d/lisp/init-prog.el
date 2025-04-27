@@ -3,8 +3,10 @@
 ;; Language support, LSP (eglot), and code editing enhancements.
 ;;; Code:
 
-(use-package flymake
-  :defer t)
+(use-package flycheck
+  :init (global-flycheck-mode)
+  :config
+  (setq flycheck-check-syntax-automatically '(save mode-enabled)))
 
 ;; eglot
 (use-package eglot
@@ -61,6 +63,7 @@
   :hook ((python-mode . eglot-ensure)
 	 (python-mode . (lambda ()
 			  (setq indent-tabs-mode nil
+				tab-width 4
 				python-indent-offset 4))))
   :custom
   (python-shell-interpreter "python3"))

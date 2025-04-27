@@ -12,6 +12,7 @@
   (global-display-line-numbers-mode t)
   (custom-set-variables '(display-line-number-width-start t))
   (global-hl-line-mode t)
+  (show-paren-mode t)
   (global-visual-line-mode t)
 
   ;; theme

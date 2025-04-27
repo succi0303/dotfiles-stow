@@ -13,12 +13,13 @@
   :config
   (setq make-backup-files nil)
   (setq auto-save-default nil)
+  (global-auto-revert-mode t))
   (normal-erase-is-backspace-mode 0)
   (global-set-key "\C-h" 'delete-backward-char)
   (transient-mark-mode t)
   (windmove-default-keybindings)
   (setq windmove-wrap-around t)
-  (setq mac-command-modifier 'meta))
+  (setq mac-command-modifier 'meta)
 
 ;; window
 (use-package ace-window
