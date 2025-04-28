@@ -79,13 +79,19 @@
   :init
   (setq org-journal-dir "~/org/journal/"
         org-journal-date-format "%Y-%m-%d"
-        org-journal-file-format "%Y-%m.org"
+        org-journal-file-format "%Y/%Y-%m-%d.org"
         org-journal-time-format ""
         org-journal-enable-agenda-integration t
-        org-journal-file-type 'monthly
-        org-journal-header "#+TITLE: %Y-%m Journal\n#+STARTUP: fold\n")
+        org-journal-file-type 'daily
+        org-journal-file-header "#+TITLE: %Y-%m-%d Journal\n#+STARTUP: showall\n")
   :bind
-  ("C-c j" . org-journal-new-entry))
+  (("C-c j" . org-journal-new-entry)
+   ("C-c J" . org-journal-new-date-entry)
+   ("C-c 0" . calendar)
+   :map org-journal-mode-map
+   ("C-c <" . org-journal-previous-entry)
+   ("C-c >" . org-journal-next-entry)))
+
 
 (use-package org-anki
   :ensure t
