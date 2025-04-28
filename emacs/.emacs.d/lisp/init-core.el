@@ -9,7 +9,9 @@
     (interactive)
     (load-file (expand-file-name "init.el" user-emacs-directory)))
   :bind
-  (("C-c r" . my/reload-init-file))
+  (("C-c r" . my/reload-init-file)
+   ("C-x e" . end-of-buffer)
+   ("C-c s" . query-replace))
   :config
   (setq make-backup-files nil)
   (setq auto-save-default nil)
