@@ -57,7 +57,7 @@
            (file "inbox.org")
            "* %?\n  %U\n  %a" :prepend t)
           ("t" "Todo" entry
-           (file "tasks.org")
+           (file "todo.org")
            "* TODO %?\n  %U\n  %a" :prepend t)
           ("n" "Note" entry
            (file+headline "notes.org" "NOTES")
