@@ -51,7 +51,7 @@ function install_packages_macos() {
     fi
 
     info "Installing packages via Brewfile..."
-    brew bundle --file="$DOTDIR/.Brewfile"
+    brew bundle --file="$DOTDIR/brew/.Brewfile"
 }
 
 function stow_dotfiles() {
