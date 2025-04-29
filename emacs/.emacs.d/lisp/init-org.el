@@ -54,8 +54,8 @@
       (insert "\n")))
   (setq org-capture-templates
         '(("t" "Todo" entry
-           (file "todo.org")
-           "* TODO %?\n  %U\n  %a" :prepend t)
+           (file+headline "todo.org" "INBOX")
+           "* TODO %?" :prepend t)
 	  ("a" "Anki flashcard" entry
 	   (file "~/org/anki/inbox.org")
 	   "* %^{front}\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: default-deck\n:ANKI_TAGS: %^{Tags}\n:END:\n%?" :prepend t)
