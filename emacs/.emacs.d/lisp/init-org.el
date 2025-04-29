@@ -53,15 +53,9 @@
     (unless (looking-at-p "^\\* ")
       (insert "\n")))
   (setq org-capture-templates
-        '(("i" "Inbox" entry
-           (file "inbox.org")
-           "* %?\n  %U\n  %a" :prepend t)
-          ("t" "Todo" entry
+        '(("t" "Todo" entry
            (file "todo.org")
            "* TODO %?\n  %U\n  %a" :prepend t)
-          ("n" "Note" entry
-           (file+headline "notes.org" "NOTES")
-           "* %?\n  %U\n  %a")
 	  ("a" "Anki flashcard" entry
 	   (file "~/org/anki/inbox.org")
 	   "* %^{front}\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: default-deck\n:ANKI_TAGS: %^{Tags}\n:END:\n%?" :prepend t)

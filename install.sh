@@ -4,7 +4,6 @@ set -euo pipefail
 DOTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TPM_DIR="$HOME/.tmux/plugins/tpm"
 VIM_PLUG_PATH="$HOME/.vim/autoload/plug.vim"
-MISE_BIN="$HOME/.local/bin/mise"
 
 function info() {
     echo -e "\033[1;32m[INFO]\033[0m $1"
@@ -17,6 +16,19 @@ function is_macos() {
 function is_ubuntu() {
     [[ -f /etc/lsb-release ]] && grep -qi ubuntu /etc/lsb-release
 }
+
+function detect_mise_bin() {
+    if is_macos; then
+        echo "/opt/homebrew/bin/mise"
+    elif is_ubuntu; then
+        echo "$HOME/.local/bin/mise"
+    else
+        echo "[ERROR] Unsupported OS for mise installation" >&2
+        exit 1
+    fi
+}
+
+MISE_BIN="$(detect_mise_bin)"
 
 function install_packages_linux() {
     info "Installing packages via apt..."
