@@ -2,6 +2,7 @@ cask_args appdir: "~/Applications/", require_sha: true
 
 # brew tap
 # brew install
+brew "bash"
 brew "cloudflared"
 brew "cmake"
 brew "coreutils"
