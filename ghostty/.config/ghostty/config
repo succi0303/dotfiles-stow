@@ -3,13 +3,12 @@ theme = ayu
 font-family = "UDEV Gothic NF"
 font-size = 18
 adjust-cell-width = 10%
-adjust-cell-height = 10%
+adjust-cell-height = 20%
 
 background-opacity = 0.6
 
 quick-terminal-position = top
 keybind = global:ctrl+;=toggle_quick_terminal
-
 macos-option-as-alt = true
 keybind = ctrl+right=csi:"1;3C"
 keybind = ctrl+left=csi:"1;5D"
