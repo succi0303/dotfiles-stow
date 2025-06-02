@@ -38,11 +38,13 @@
         org-refile-allow-creating-parent-nodes 'confirm)
   ;; TODO keywords
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "WAITING(w@/!)" "IN-PROGRESS(i)" "|" "DONE(d!)" "CANCELLED(c@)")))
+        '((sequence "TODO(t)" "--PROJECT(p)" "WAITING(w@/!)" "IN-PROGRESS(i)" "REPEAT(r)" "|" "DONE(d!)" "CANCELLED(c@)")))
   (setq org-todo-keyword-faces
         '(("TODO" . (:foreground "orange" :weight bold))
+	  ("--PROJECT" . (:foreground "pink" :weight bold))
           ("WAITING" . (:foreground "gold" :weight bold))
           ("IN-PROGRESS" . (:foreground "deepskyblue" :weight bold))
+	  ("REPEAT" .(:foreground "purple" :weight bold))
           ("DONE" . (:foreground "forest green" :weight bold))
           ("CANCELLED" . (:foreground "gray" :weight bold))))
   ;; Capture templates
