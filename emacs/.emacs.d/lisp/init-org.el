@@ -12,8 +12,7 @@
   (("C-c a" . org-agenda)
    ("C-c c" . org-capture)
    :map org-mode-map
-   ("<RET>" . #'org-insert-heading-respect-content)
-   ("C-c <RET>" . #'newline))
+   ("C-c <RET>" . #'org-insert-heading-respect-content)
    ("C-x n s" . org-narrow-subtree)
    ("C-x n w" . widen)
    ("C-S-<up>" . org-metaup)
@@ -90,7 +89,6 @@
    :map org-journal-mode-map
    ("C-c <" . org-journal-previous-entry)
    ("C-c >" . org-journal-next-entry)))
-
 
 (use-package org-anki
   :ensure t
