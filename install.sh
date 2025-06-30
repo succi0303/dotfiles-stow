@@ -13,14 +13,14 @@ function is_macos() {
     [[ "$(uname)" == "Darwin" ]]
 }
 
-function is_ubuntu() {
-    [[ -f /etc/lsb-release ]] && grep -qi ubuntu /etc/lsb-release
+function is_linux() {
+    [[ "$(uname)" == "Linux" ]]
 }
 
 function detect_mise_bin() {
     if is_macos; then
         echo "/opt/homebrew/bin/mise"
-    elif is_ubuntu; then
+    elif is_linux; then
         echo "$HOME/.local/bin/mise"
     else
         echo "[ERROR] Unsupported OS for mise installation" >&2
@@ -32,16 +32,11 @@ MISE_BIN="$(detect_mise_bin)"
 
 function install_packages_linux() {
     info "Installing packages via apt..."
-    sudo add-apt-repository -y ppa:ubuntuhandbook1/emacs
-    sudo apt update
-    sudo apt upgrade -y
-
+    sudo add-apt-repository -y ppa:jonathonf/vim
+    sudo apt update && sudo apt upgrade -y
     sudo apt install -y \
         gpg cmake libtool-bin gpg-agent sudo curl wget git tig \
         stow tmux powerline nano vim vim-gui-common vim-runtime
-
-    sudo apt install -y --no-install-recommends \
-        emacs-nox emacs-common
 }
 
 function install_packages_macos() {
@@ -98,7 +93,7 @@ function install_vim_plug() {
 
 if is_macos; then
     install_packages_macos
-elif is_ubuntu; then
+elif is_linux; then
     install_packages_linux
 else
     echo "[ERROR] Unsupported OS"
