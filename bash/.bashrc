@@ -131,8 +131,8 @@ if [[ -x "$HOME/.local/bin/mise" ]]; then
 fi
 
 ## ─────────────────────────────────────
-## Powerline
+## Starship
 ## ─────────────────────────────────────
-if [ -f /usr/share/powerline/bindings/bash/powerline.sh ]; then
-    source /usr/share/powerline/bindings/bash/powerline.sh
+if command -v starship &> /dev/null; then
+  eval "$(starship init bash)"
 fi

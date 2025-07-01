@@ -4,6 +4,7 @@
 "node" = '22'
 
 "pandoc" = "latest"
+"starship" = "latest"
 
 # npm
 "npm:npm" = "latest"
