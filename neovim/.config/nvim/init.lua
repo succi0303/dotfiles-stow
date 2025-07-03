@@ -74,37 +74,12 @@ rtp:prepend(lazypath)
 
 require('lazy').setup({
   {
-    'folke/tokyonight.nvim',
-    lazy = false,
-    priority = 1000,
-    opts = {},
-  },
-  {
     'NMAC427/guess-indent.nvim',
-  },
-  {
-    'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function()
-      require('lualine').setup {
-        options = {
-          icon_enabled = true,
-          theme = 'tokyonight'
-        }
-      }
-    end
   },
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
     config = true
-  },
-  {
-    'lukas-reineke/indent-blankline.nvim',
-    main = 'ibl',
-    ---@module 'ibl'
-    ---@type ibl.config
-    opts = {},
   },
   {
     'lewis6991/gitsigns.nvim',
@@ -164,6 +139,34 @@ require('lazy').setup({
     },
   },
   {
+    'folke/flash.nvim',
+    event = 'VeryLazy',
+    ---@type Flash.config
+    opts = {},
+    keys = {
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+    },
+  },
+  {
+    'akinsho/toggleterm.nvim',
+    version = '*',
+    opts = {
+      open_mapping = [[<C-t>]],
+      hide_numbers = true,
+      shade_filetypes = {},
+      shade_terminals = true,
+      shading_factor = 2,
+      start_in_insert = true,
+      insert_mappings = true,
+      direction = 'float',
+      close_on_exit = true,
+    },
+  },
+  {
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
     dependencies = {
@@ -219,8 +222,104 @@ require('lazy').setup({
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '{S]earch [N]eovim files' })
     end,
-  }
+  },
+  --[[ colorscheme & ui ]]
+  {
+    'folke/tokyonight.nvim',
+    priority = 1000,
+    config = function()
+    ---@diagnostic disable-next-line: missing-fields
+      require('tokyonight').setup {
+        styles = {
+    	  comments = { italic = false },
+        },
+      }
+      vim.cmd.colorscheme 'tokyonight'
+    end
+  },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require('lualine').setup {
+        options = {
+          icon_enabled = true,
+          theme = 'tokyonight'
+        }
+      }
+    end
+  },
+  {
+    'romgrk/barbar.nvim',
+    dependencies = {
+      'lewis6991/gitsigns.nvim',
+      'nvim-tree/nvim-web-devicons',
+    },
+    init = function()vim.g.barbar_auto_setup = false end,
+    opts = {
+      animation = true,
+      insert_at_start = true,
+    },
+  },
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v3.x',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons',
+      'MunifTanjim/nui.nvim',
+    },
+    lazy = false,
+    ---@module 'neo-tree'
+    ---@type neotree.Config?
+    opts = {
+      vim.keymap.set('n', '<C-e>', '<Cmd>Neotree toggle<CR>')
+    },
+  },
+  {
+    'lukas-reineke/indent-blankline.nvim',
+    main = 'ibl',
+    ---@module 'ibl'
+    ---@type ibl.config
+    opts = {},
+  },
+  {
+    'folke/todo-comments.nvim',
+    event = 'VimEnter',
+    dependencies = {
+      'nvim-lua/plenary.nvim'
+    },
+    opts = { signs = false },
+  },
+  {
+    'echasnovski/mini.nvim',
+    config = function()
+      require('mini.ai').setup { n_lines = 500 }
+      require('mini.surround').setup()
+      local statusline = require 'mini.statusline'
+      statusline.setup { use_icons = vim.g.have_nerd_font }
+      ---@diagnostic.disable-next-line: duplicate-set-field
+      statusline.section_location = function()
+        return '%2l:%-2v'
+      end
+    end,
+  },
+  --[[ treesitter ]]
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    main = 'nvim-treesitter.configs',
+    opts = {
+      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      auto_install = true,
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = { 'ruby' },
+      },
+      indent = {
+        enable = true,
+        disable = { 'ruby' }
+      },
+    },
+  },
 })
-
--- [[ colorscheme ]]
-vim.cmd[[colorscheme tokyonight]]
