@@ -127,15 +127,15 @@ require('lazy').setup({
           F8 = '<F8>',
           F9 = '<F9>',
           F10 = '<F10>',
-         F11 = '<F11>',
+          F11 = '<F11>',
           F12 = '<F12>',
-       },
+        },
       },
     },
     spec = {
-	    { '<leader>s', group = '[S]earch' },
-	    { '<leader>t', group = '[T]oggle' },
-	    { '<leader>h', group = 'Git [H]unk' },
+      { '<leader>s', group = '[S]earch' },
+      { '<leader>t', group = '[T]oggle' },
+      { '<leader>h', group = 'Git [H]unk' },
     },
   },
   {
@@ -144,11 +144,11 @@ require('lazy').setup({
     ---@type Flash.config
     opts = {},
     keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+      { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+      { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+      { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
+      { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
     },
   },
   {
@@ -179,7 +179,7 @@ require('lazy').setup({
         end
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
     },
     config = function()
       require('telescope').setup {
@@ -214,7 +214,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>s/', function()
         builtin.live_grep {
           grep_open_files = true,
-          prompt_tile =  'Live Grep in Open Files',
+          prompt_tile = 'Live Grep in Open Files',
         }
       end, { desc = '[S]earch [/] in Open Files' })
 
@@ -239,7 +239,7 @@ require('lazy').setup({
       { 'mason-org/mason.nvim', opts = {} },
       'mason-org/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',    opts = {} },
       'saghen/blink.cmp',
     },
     config = function()
@@ -251,7 +251,7 @@ require('lazy').setup({
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
           map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
-          map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x'})
+          map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
           map('grr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
           map('gri', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementations')
           map('grd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinitions')
@@ -259,7 +259,7 @@ require('lazy').setup({
           map('gO', require('telescope.builtin').lsp_document_symbols, 'Open Document Symbols')
           map('gW', require('telescope.builtin').lsp_workspace_symbols, 'Open Workspace Symbols')
           map('grt', require('telescope.builtin').lsp_type_definitions, '[G]oto [T]ype [D]efinitions')
-          
+
           ---@param client vim.lsp.Client
           ---@param method vim.lsp.protocol.Method
           ---@param bufnr? integer, some lsp support methods only in specific files
@@ -332,10 +332,21 @@ require('lazy').setup({
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       local servers = {
+        bashls = {},
         clangd = {},
+        cssls = {},
+        docker_compose_language_service = {},
+        dockerls = {},
+        emmet_ls = {},
         gopls = {},
+        html = {},
+        jsonls = {},
         pyright = {},
         rust_analyzer = {},
+        sqls = {},
+        terraformls = {},
+        ts_ls = {},
+        yamlls = {},
         lua_ls = {
           -- cmd = { ... },
           -- filetypes = { ... },
@@ -456,10 +467,10 @@ require('lazy').setup({
     'folke/tokyonight.nvim',
     priority = 1000,
     config = function()
-    ---@diagnostic disable-next-line: missing-fields
+      ---@diagnostic disable-next-line: missing-fields
       require('tokyonight').setup {
         styles = {
-    	  comments = { italic = false },
+          comments = { italic = false },
         },
       }
       vim.cmd.colorscheme 'tokyonight'
@@ -483,7 +494,7 @@ require('lazy').setup({
       'lewis6991/gitsigns.nvim',
       'nvim-tree/nvim-web-devicons',
     },
-    init = function()vim.g.barbar_auto_setup = false end,
+    init = function() vim.g.barbar_auto_setup = false end,
     opts = {
       animation = true,
       insert_at_start = true,
